@@ -1,0 +1,59 @@
+// =============================================================================
+// TEST: ut-f3-22 — Percent Height Nested
+// =============================================================================
+//
+// INTENT
+//   Validate that percent heights resolve correctly through multiple nesting
+//   levels when each ancestor has a known fixed height. This chains: Screen
+//   (800px) → Row (height: 70%) → Column (height: 100%) → Card (height: 60%).
+//
+// WHAT IS BEING TESTED
+//   - Row height: 70% of Screen 800 = 560px
+//   - Left Column height: 100% of Row = 560px
+//   - Inner Card height: 60% of Column = 336px
+//   - Right Column uses a fixed height for contrast
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ The outer Row does not collapse to zero height
+//   ✓ Left column Card fills 60% of the Row's height (visually about half)
+//   ✓ Right column Card is a fixed 200px — visually shorter than left
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 800
+  padding: 24
+
+  Text { text: "Screen 800px → Row 70% → Column 100% → Card 60%"  variant: caption }
+
+  Row {
+    width: 100%
+    height: 70%
+    gap: 16
+
+    Column {
+      width: 50%
+      height: 100%
+
+      Card {
+        title: "height: 60% of Column"
+        width: 100%
+        height: 60%
+        Text { text: "60% × 560px Row = ~336px"  variant: body }
+      }
+    }
+
+    Column {
+      width: 50%
+      height: 100%
+
+      Card {
+        title: "Fixed 200px for comparison"
+        width: 100%
+        height: 200
+        Text { text: "Fixed 200px — shorter than left"  variant: body }
+      }
+    }
+  }
+}

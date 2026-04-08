@@ -1,0 +1,36 @@
+// =============================================================================
+// TEST: ut-f2-11 — Text Weight
+// =============================================================================
+//
+// INTENT
+//   Validate all five font-weight values render with visually distinct stroke
+//   widths. All lines use the same variant (body) and font-size so only the
+//   weight differs.
+//
+// WHAT IS BEING TESTED
+//   - weight: bold / semibold / medium / normal / light
+//   - Each maps to a CSS font-weight in the SVG text element
+//   - Intrinsic height is unaffected by weight (same line-height for all)
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ "bold" text is visually heavier than all others
+//   ✓ "light" text is visually thinner than "normal"
+//   ✓ "semibold" sits between bold and medium
+//   ✓ All five lines are the same height in the layout
+// =============================================================================
+
+Screen {
+  width: 600
+  height: 400
+  padding: 32
+
+  Column {
+    gap: 12
+    Text { text: "Bold — weight: bold"      variant: body  weight: bold     }
+    Text { text: "Semibold — weight: semibold" variant: body  weight: semibold }
+    Text { text: "Medium — weight: medium"  variant: body  weight: medium   }
+    Text { text: "Normal — weight: normal"  variant: body  weight: normal   }
+    Text { text: "Light — weight: light"    variant: body  weight: light    }
+  }
+}

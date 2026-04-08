@@ -1,0 +1,39 @@
+// =============================================================================
+// TEST: ut-f1-03 — Explicit Pixel Sizes
+// =============================================================================
+//
+// INTENT
+//   Validate that explicit numeric width/height values are stored and rendered
+//   exactly as specified, with no rounding or scaling applied by the layout
+//   engine. Three cards of different sizes are shown side by side.
+//
+// WHAT IS BEING TESTED
+//   - width: N and height: N store exact integer pixel values
+//   - Three sibling Cards in a Row each occupy their declared size
+//   - Gap between children equals the Row's gap value
+//
+// EXPECTED GEOMETRY (gap: 16, no padding)
+//   Card A: x=0,   w=120, h=80
+//   Card B: x=136, w=240, h=160   (120 + 16 gap)
+//   Card C: x=392, w=80,  h=40    (136 + 240 + 16 gap)
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Status bar shows "5 boxes" (Screen + Row + 3 Cards)
+//   ✓ Three distinctly sized rectangles on one horizontal line
+//   ✓ Card B is twice as wide and tall as Card A
+//   ✓ Card C is the smallest — roughly a thin strip
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 400
+
+  Row {
+    gap: 16
+
+    Card { width: 120  height: 80  }
+    Card { width: 240  height: 160 }
+    Card { width: 80   height: 40  }
+  }
+}

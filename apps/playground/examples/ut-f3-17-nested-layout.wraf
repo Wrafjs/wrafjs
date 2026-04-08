@@ -1,0 +1,67 @@
+// =============================================================================
+// TEST: ut-f3-17 — Nested Layout
+// =============================================================================
+//
+// INTENT
+//   Validate that layout containers can be arbitrarily nested and that each
+//   level correctly computes its contentW and contentH from the parent.
+//   A Row → Column → Card → Row structure exercises four levels of nesting.
+//
+// WHAT IS BEING TESTED
+//   - Outer Row splits width 60/40 between two Columns
+//   - Left Column (60%): stacks two Cards vertically
+//   - Right Column (40%): contains a Card with an inner Row of two Buttons
+//   - Each level inherits availW from its parent's contentW
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Two columns side by side, left wider than right
+//   ✓ Left column has two stacked Cards
+//   ✓ Right column Card contains two Buttons horizontally
+//   ✓ No content overflows any container boundary
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 600
+  padding: 24
+
+  Row {
+    gap: 16
+
+    Column {
+      width: 60%
+      gap: 12
+
+      Card {
+        title: "Top card"
+        width: 100%
+        height: 120
+        Text { text: "Left column — top"  variant: body }
+      }
+
+      Card {
+        title: "Bottom card"
+        width: 100%
+        height: 120
+        Text { text: "Left column — bottom"  variant: body }
+      }
+    }
+
+    Column {
+      width: 40%
+
+      Card {
+        title: "Right card with inner Row"
+        width: 100%
+        height: 120
+
+        Row {
+          gap: 8
+          Button { text: "Action A"  variant: primary   }
+          Button { text: "Action B"  variant: secondary }
+        }
+      }
+    }
+  }
+}

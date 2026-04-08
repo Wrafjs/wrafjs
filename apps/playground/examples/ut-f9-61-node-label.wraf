@@ -1,0 +1,62 @@
+// =============================================================================
+// TEST: ut-f9-61 — Node Labels
+// =============================================================================
+//
+// INTENT
+//   Validate that nodes declared with an optional label (e.g. Card "profile" { })
+//   are parsed correctly, that the label appears in the cursor-highlight tooltip,
+//   and that labels do not affect layout or rendering in any visible way.
+//
+// WHAT IS BEING TESTED
+//   - Node label syntax: NodeType "label" { ... }
+//   - Label is parsed into WrafNode.label and stored in loc
+//   - Cursor-highlight tooltip shows "Card profile" instead of just "Card"
+//   - Multiple labeled nodes in the same Screen
+//   - Layout and rendering are identical to unlabeled equivalents
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors or parse warnings
+//   ✓ Canvas renders identically to the same layout without labels
+//   ✓ Hovering the cursor over a labeled Card shows the label in the tooltip
+//   ✓ Labels do not add any visible element to the wireframe
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 16
+
+    Text { text: "Hover each Card to see its label in the highlight tooltip"  variant: caption }
+
+    Row {
+      gap: 16
+
+      Card "profile" {
+        title: "Profile card"
+        width: 250
+        height: 160
+        Text { text: "Node label: 'profile'"  variant: body }
+        Text { text: "Hover → tooltip shows: Card profile"  variant: caption }
+      }
+
+      Card "settings" {
+        title: "Settings card"
+        width: 250
+        height: 160
+        Text { text: "Node label: 'settings'"  variant: body }
+        Text { text: "Hover → tooltip shows: Card settings"  variant: caption }
+      }
+
+      Card "billing" {
+        title: "Billing card"
+        width: 250
+        height: 160
+        Text { text: "Node label: 'billing'"  variant: body }
+        Text { text: "Hover → tooltip shows: Card billing"  variant: caption }
+      }
+    }
+  }
+}

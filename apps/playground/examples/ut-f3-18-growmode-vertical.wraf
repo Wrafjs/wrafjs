@@ -1,0 +1,53 @@
+// =============================================================================
+// TEST: ut-f3-18 — GrowMode Vertical
+// =============================================================================
+//
+// INTENT
+//   Validate that growMode: vertical makes a child expand to consume all
+//   remaining vertical space in a fixed-height parent Column.
+//
+// WHAT IS BEING TESTED
+//   - A Column with a known height (400px) contains a fixed-height header,
+//     a "grow" Card with growMode: vertical, and a fixed-height footer
+//   - The grow Card should fill the space between header and footer
+//
+// EXPECTED HEIGHTS
+//   Header: 48px  |  Footer: 48px  |  Grow card: 400 - 48 - 48 - 2×gap = ~288px
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Header at top, footer at bottom, grow card fills the middle
+//   ✓ Grow card visually spans from below the header to above the footer
+//   ✓ No unused empty space between the three sections
+// =============================================================================
+
+Screen {
+  width: 700
+  height: 600
+  padding: 24
+
+  Column {
+    width: 100%
+    height: 400
+    gap: 8
+
+    Card {
+      title: "Header (fixed 48px)"
+      width: 100%
+      height: 48
+    }
+
+    Card {
+      title: "Grows to fill remaining space"
+      width: 100%
+      growMode: vertical
+      Text { text: "This card expands to fill the gap between header and footer"  variant: body }
+    }
+
+    Card {
+      title: "Footer (fixed 48px)"
+      width: 100%
+      height: 48
+    }
+  }
+}

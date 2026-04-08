@@ -1,0 +1,67 @@
+// =============================================================================
+// TEST: ut-f9-58 — Zero Gap
+// =============================================================================
+//
+// INTENT
+//   Validate that gap: 0 causes children to touch each other with no visible
+//   space, producing a flush tiled layout. This is the degenerate case for gap
+//   and exercises the `usedW += childW + 0` code path in the layout engine.
+//
+// WHAT IS BEING TESTED
+//   - gap: 0 on Row → children flush horizontally (no gutter)
+//   - gap: 0 on Column → children flush vertically (no gutter)
+//   - Combined: a grid-like layout with zero gaps in both axes
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Horizontal cards share edges with no visible gap between them
+//   ✓ Vertical cards share edges with no visible gap between them
+//   ✓ The 3×3 grid appears as one seamless tiled block
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "gap: 0 horizontal — cards flush together"  variant: heading }
+    Row {
+      gap: 0
+      Card { width: 120  height: 60  Text { text: "A"  align: center } }
+      Card { width: 120  height: 60  Text { text: "B"  align: center } }
+      Card { width: 120  height: 60  Text { text: "C"  align: center } }
+      Card { width: 120  height: 60  Text { text: "D"  align: center } }
+    }
+
+    Text { text: "gap: 0 vertical — rows flush together"  variant: heading }
+    Column {
+      gap: 0
+      Card { width: 300  height: 40  Text { text: "Row 1"  align: center } }
+      Card { width: 300  height: 40  Text { text: "Row 2"  align: center } }
+      Card { width: 300  height: 40  Text { text: "Row 3"  align: center } }
+    }
+
+    Text { text: "3 × 3 tiled grid (gap: 0 in both axes)"  variant: heading }
+    Column {
+      gap: 0
+      Row { gap: 0
+        Card { width: 100  height: 60  Text { text: "1,1"  align: center } }
+        Card { width: 100  height: 60  Text { text: "1,2"  align: center } }
+        Card { width: 100  height: 60  Text { text: "1,3"  align: center } }
+      }
+      Row { gap: 0
+        Card { width: 100  height: 60  Text { text: "2,1"  align: center } }
+        Card { width: 100  height: 60  Text { text: "2,2"  align: center } }
+        Card { width: 100  height: 60  Text { text: "2,3"  align: center } }
+      }
+      Row { gap: 0
+        Card { width: 100  height: 60  Text { text: "3,1"  align: center } }
+        Card { width: 100  height: 60  Text { text: "3,2"  align: center } }
+        Card { width: 100  height: 60  Text { text: "3,3"  align: center } }
+      }
+    }
+  }
+}

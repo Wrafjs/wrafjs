@@ -1,0 +1,62 @@
+// =============================================================================
+// TEST: ut-f6-43 — Navbar
+// =============================================================================
+//
+// INTENT
+//   Validate that Navbar renders with its fixed 48px intrinsic height, displays
+//   the title on the left, and flows inline children (Search, Badge, Avatar)
+//   horizontally on the right side.
+//
+// WHAT IS BEING TESTED
+//   - Navbar intrinsic height is always 48px regardless of children
+//   - title prop renders a text label on the left
+//   - logo prop renders an image/icon placeholder alongside the title
+//   - Inline children (Search, Badge, Avatar) appear in a right-side toolbar
+//   - Navbar with width: 100% spans the full Screen width
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Both Navbars are exactly 48px tall
+//   ✓ Title text is visible on the left of each Navbar
+//   ✓ Children (Search, Badges, Avatar) appear inside the Navbar boundary
+//   ✓ Full-width Navbar spans edge-to-edge
+// =============================================================================
+
+Screen {
+  width: 1024
+  height: 400
+  padding: 0
+
+  Column {
+    gap: 0
+
+    // Minimal navbar — title only
+    Navbar {
+      title: "My Application"
+      width: 100%
+    }
+
+    Separator {}
+
+    // Rich navbar — title + search + badges + avatar
+    Navbar {
+      title: "Dashboard"
+      width: 100%
+      Search { placeholder: "Search…"  width: 220 }
+      Badge  { text: "5"   variant: warning }
+      Badge  { text: "!"   variant: danger  }
+      Avatar { name: "Jane Smith"  size: sm  }
+    }
+
+    Separator {}
+
+    // Navbar with logo placeholder
+    Navbar {
+      title: "Acme Corp"
+      logo: "acme-logo.svg"
+      width: 100%
+      Button { text: "Sign in"   variant: ghost   }
+      Button { text: "Sign up"   variant: primary }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+// =============================================================================
+// TEST: ut-f1-06 — Percent Width
+// =============================================================================
+//
+// INTENT
+//   Validate that width: X% resolves correctly against the parent's available
+//   content width at every level of nesting. Three rows exercise different
+//   percent splits.
+//
+// WHAT IS BEING TESTED
+//   - width: 100% fills the full available width
+//   - width: 50% places two cards side by side
+//   - width: 33% / 34% / 33% fills a row with three columns
+//   - Percent base accounts for the Row's gap between siblings
+//
+// EXPECTED WIDTHS (Screen 900px, no outer padding)
+//   Row A: one Card at 100% = 900px
+//   Row B: two Cards at 50% each, gap 12 → percent base = 900-12 = 888 → each ~444px
+//   Row C: 33% / 34% / 33%, gap 12 → base = 900-24 = 876 → ~289 / ~298 / ~289px
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Row A: one full-width Card
+//   ✓ Row B: two equal-width Cards side by side
+//   ✓ Row C: three Cards across, middle slightly wider
+//   ✓ No horizontal overflow beyond the Screen boundary
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 700
+  padding: 24
+
+  Column {
+    gap: 24
+
+    Text { text: "A — width: 100%"             variant: caption }
+    Row {
+      Card { width: 100%  height: 60
+        Text { text: "100%"  align: center }
+      }
+    }
+
+    Text { text: "B — two columns at 50% each"  variant: caption }
+    Row {
+      gap: 12
+      Card { width: 50%  height: 60
+        Text { text: "50%"  align: center }
+      }
+      Card { width: 50%  height: 60
+        Text { text: "50%"  align: center }
+      }
+    }
+
+    Text { text: "C — three columns at 33 / 34 / 33%"  variant: caption }
+    Row {
+      gap: 12
+      Card { width: 33%  height: 60
+        Text { text: "33%"  align: center }
+      }
+      Card { width: 34%  height: 60
+        Text { text: "34%"  align: center }
+      }
+      Card { width: 33%  height: 60
+        Text { text: "33%"  align: center }
+      }
+    }
+  }
+}

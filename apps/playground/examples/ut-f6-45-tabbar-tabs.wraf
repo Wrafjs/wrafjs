@@ -1,0 +1,62 @@
+// =============================================================================
+// TEST: ut-f6-45 — Tabbar and Tabs
+// =============================================================================
+//
+// INTENT
+//   Validate that Tabbar renders a 48px-tall horizontal strip of Tab items,
+//   that the active Tab is visually distinguished, and that Tabs with icons
+//   display the icon alongside the label.
+//
+// WHAT IS BEING TESTED
+//   - Tabbar intrinsic height: 48px
+//   - Tab with text only
+//   - Tab with text + icon: "star"
+//   - active: true on one Tab — that Tab must look visually selected
+//   - Multiple Tabbars stacked to show different states
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Tabbar is 48px tall regardless of Tab count
+//   ✓ Active Tab is visually distinct (underline or fill) from inactive ones
+//   ✓ Tabs with icons show the glyph left of the label
+//   ✓ All Tabs are evenly distributed horizontally
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "Standard text tabs"  variant: heading }
+    Tabbar {
+      width: 100%
+      Tab { text: "Overview"   active: true }
+      Tab { text: "Analytics" }
+      Tab { text: "Orders"    }
+      Tab { text: "Settings"  }
+    }
+
+    Text { text: "Tabs with icons"  variant: heading }
+    Tabbar {
+      width: 100%
+      Tab { text: "Home"      icon: "home"   active: true }
+      Tab { text: "Analytics" icon: "star"              }
+      Tab { text: "Users"     icon: "user"              }
+      Tab { text: "Settings"  icon: "settings"          }
+    }
+
+    Text { text: "Many tabs (6)"  variant: heading }
+    Tabbar {
+      width: 100%
+      Tab { text: "All"         active: true }
+      Tab { text: "Pending"   }
+      Tab { text: "Active"    }
+      Tab { text: "Completed" }
+      Tab { text: "Cancelled" }
+      Tab { text: "Archived"  }
+    }
+  }
+}

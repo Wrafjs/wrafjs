@@ -1,0 +1,55 @@
+// =============================================================================
+// TEST: ut-f3-21 — Mixed Sizing
+// =============================================================================
+//
+// INTENT
+//   Validate that percent-width, fixed-width, and auto-width (fill) children
+//   can coexist in the same Row with correct sizing. This is the most complex
+//   width-resolution scenario.
+//
+// WHAT IS BEING TESTED
+//   Row A: 25% + fixed 200px + remaining fill
+//   Row B: three percent-based columns (30% + 40% + 30%)
+//   Row C: fixed + percent + fixed in a three-column layout
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Row A: left column is 25%, center is 200px, right fills the rest
+//   ✓ Row B: columns proportional to their percentages
+//   ✓ Row C: fixed columns are equal, percent middle is wider
+//   ✓ No column overflows the Row boundary
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 700
+  padding: 24
+
+  Column {
+    gap: 24
+
+    Text { text: "A — 25% + fixed 200px + fill remainder"  variant: caption }
+    Row {
+      gap: 8
+      Card { width: 25%  height: 60  Text { text: "25%"    align: center } }
+      Card { width: 200  height: 60  Text { text: "200px"  align: center } }
+      Card {             height: 60  Text { text: "fill"   align: center } }
+    }
+
+    Text { text: "B — 30% + 40% + 30% (percent fills row)"  variant: caption }
+    Row {
+      gap: 8
+      Card { width: 30%  height: 60  Text { text: "30%"  align: center } }
+      Card { width: 40%  height: 60  Text { text: "40%"  align: center } }
+      Card { width: 30%  height: 60  Text { text: "30%"  align: center } }
+    }
+
+    Text { text: "C — fixed 120 + 50% + fixed 120"  variant: caption }
+    Row {
+      gap: 8
+      Card { width: 120  height: 60  Text { text: "120px"  align: center } }
+      Card { width: 50%  height: 60  Text { text: "50%"    align: center } }
+      Card { width: 120  height: 60  Text { text: "120px"  align: center } }
+    }
+  }
+}

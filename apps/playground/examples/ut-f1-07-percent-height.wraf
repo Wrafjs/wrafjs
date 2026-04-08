@@ -1,0 +1,77 @@
+// =============================================================================
+// TEST: ut-f1-07 — Percent Height
+// =============================================================================
+//
+// INTENT
+//   Validate that height: X% resolves against the parent's contentH when the
+//   parent has a known fixed height. This specifically tests the layout fix
+//   where vertical-flow children were previously receiving availH = 0, causing
+//   all percent heights to resolve to zero.
+//
+// WHAT IS BEING TESTED
+//   - height: 50% on a direct Screen child resolves to 50% of Screen height
+//   - height: 94% correctly leaves a small gap (like a navbar remainder pattern)
+//   - height: 100% on a Column child fills its parent Row's height
+//   - Nested percent: Card at height: 60% inside a Row at height: 50%
+//
+// EXPECTED HEIGHTS (Screen 800px tall)
+//   Card A (height: 50%) = 400px
+//   Card B (height: 30%) = 240px
+//   Row C (height: 94%)  = 752px  → its Column children (height: 100%) = 752px
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Card A is exactly half the screen height
+//   ✓ Card B is 30% of screen height
+//   ✓ The two-column Row fills 94% of the screen
+//   ✓ Both columns inside the Row reach the bottom of the Row
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 800
+
+  // A: 50% of screen height
+  Card {
+    title: "A — height: 50% of Screen"
+    width: 100%
+    height: 50%
+    Text { text: "This Card is 400px tall (50% × 800)"  variant: body }
+  }
+
+  // B: 30% of screen height
+  Card {
+    title: "B — height: 30% of Screen"
+    width: 100%
+    height: 30%
+    Text { text: "This Card is 240px tall (30% × 800)"  variant: body }
+  }
+
+  // C: Row at 94% with two full-height columns inside
+  Row {
+    width: 100%
+    height: 94%
+
+    Column {
+      width: 50%
+      height: 100%
+      Card {
+        title: "C-left — height: 100% of Row"
+        width: 100%
+        height: 100%
+        Text { text: "Fills the Row height"  variant: body }
+      }
+    }
+
+    Column {
+      width: 50%
+      height: 100%
+      Card {
+        title: "C-right — height: 100% of Row"
+        width: 100%
+        height: 100%
+        Text { text: "Fills the Row height"  variant: body }
+      }
+    }
+  }
+}

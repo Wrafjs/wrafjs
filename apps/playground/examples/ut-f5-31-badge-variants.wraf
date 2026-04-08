@@ -1,0 +1,66 @@
+// =============================================================================
+// TEST: ut-f5-31 — Badge Variants
+// =============================================================================
+//
+// INTENT
+//   Validate that all 5 Badge variant values produce visually distinct colors,
+//   and that the dot mode renders a small indicator circle instead of text.
+//
+// WHAT IS BEING TESTED
+//   Variants: default / primary / success / warning / danger
+//   Dot mode: dot: true renders a filled circle with no text
+//   Numeric badges: short text like "3", "99+"
+//   Disabled: reduced opacity
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Five distinct fill colors visible (default, blue, green, amber, red)
+//   ✓ Dot badges are compact circular shapes with no label text
+//   ✓ Badges render inline (intrinsic small height)
+//   ✓ "99+" badge does not clip its text
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 500
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "Variants"  variant: heading }
+    Row {
+      gap: 10
+      Badge { text: "Default"  variant: default  }
+      Badge { text: "Primary"  variant: primary  }
+      Badge { text: "Success"  variant: success  }
+      Badge { text: "Warning"  variant: warning  }
+      Badge { text: "Danger"   variant: danger   }
+    }
+
+    Text { text: "Numeric badges"  variant: heading }
+    Row {
+      gap: 10
+      Badge { text: "1"    variant: primary }
+      Badge { text: "3"    variant: warning }
+      Badge { text: "12"   variant: danger  }
+      Badge { text: "99+"  variant: danger  }
+    }
+
+    Text { text: "Dot mode"  variant: heading }
+    Row {
+      gap: 10
+      Badge { dot: true  variant: default  }
+      Badge { dot: true  variant: primary  }
+      Badge { dot: true  variant: success  }
+      Badge { dot: true  variant: warning  }
+      Badge { dot: true  variant: danger   }
+    }
+
+    Text { text: "Disabled"  variant: heading }
+    Row {
+      gap: 10
+      Badge { text: "Disabled"  variant: primary  disabled: true }
+    }
+  }
+}

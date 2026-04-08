@@ -1,0 +1,90 @@
+// =============================================================================
+// TEST: ut-f9-62 — All Props on a Single Node
+// =============================================================================
+//
+// INTENT
+//   Validate that a node with every one of its valid props set simultaneously
+//   produces no validator errors or warnings, and that the renderer handles
+//   the full prop set without crashing.
+//
+// WHAT IS BEING TESTED
+//   - Button with all valid props: text, variant, size, loading, disabled, icon
+//   - Input with all valid props: placeholder, value, name, required, readonly, disabled
+//   - Checkbox with all valid props: text, checked, indeterminate, name, required, disabled
+//   - ListItem with all valid props: text, subtitle, icon
+//   - Badge with all valid props: text, variant, dot, disabled
+//   - Text with all valid props: text, variant, size, weight, color, align, italic, truncate
+//
+// ACCEPTANCE CRITERIA
+//   ✓ Zero validator errors and zero warnings for every node
+//   ✓ Each node renders without throwing a runtime error
+//   ✓ Status bar confirms no warnings (⚠ count is 0)
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 700
+  padding: 32
+
+  Column {
+    gap: 20
+
+    Text { text: "All Button props"  variant: heading }
+    Button {
+      text: "Full props button"
+      variant: primary
+      size: md
+      loading: false
+      disabled: false
+      icon: "star"
+    }
+
+    Text { text: "All Input props"  variant: heading }
+    Input {
+      placeholder: "Enter value"
+      value: "current value"
+      name: "full-input"
+      required: true
+      readonly: false
+      disabled: false
+      width: 100%
+    }
+
+    Text { text: "All Checkbox props"  variant: heading }
+    Checkbox {
+      text: "Full checkbox"
+      checked: true
+      indeterminate: false
+      name: "full-check"
+      required: false
+      disabled: false
+    }
+
+    Text { text: "All ListItem props"  variant: heading }
+    ListItem {
+      text: "Full list item"
+      subtitle: "All three props set"
+      icon: "user"
+    }
+
+    Text { text: "All Badge props"  variant: heading }
+    Badge {
+      text: "Full badge"
+      variant: success
+      dot: false
+      disabled: false
+    }
+
+    Text { text: "All Text props"  variant: heading }
+    Text {
+      text: "Full text node with every prop set"
+      variant: body
+      size: 14
+      weight: semibold
+      color: "#2a2a2a"
+      align: left
+      italic: false
+      truncate: false
+    }
+  }
+}

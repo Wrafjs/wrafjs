@@ -1,0 +1,44 @@
+// =============================================================================
+// TEST: ut-f5-42 — Code Block
+// =============================================================================
+//
+// INTENT
+//   Validate that the Code control renders with a monospace font and a
+//   visually distinct background, and that all Text variant/weight props
+//   that also apply to Code work correctly.
+//
+// WHAT IS BEING TESTED
+//   - Code inherits TEXT_CONTENT props: text, variant, size, align, weight
+//   - Renderer uses a monospace font family for Code
+//   - Background differs from a plain Text control
+//   - Multiple Code blocks inside a Column stack correctly
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Code renders with a monospace font (visibly different from Text)
+//   ✓ Background is distinct (darker or shaded compared to surrounding content)
+//   ✓ Code blocks with different sizes scale the font correctly
+//   ✓ A Code block next to a Text block shows clear visual contrast
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 16
+
+    Text { text: "Code control examples"  variant: heading }
+    Text { text: "Regular body text for comparison"  variant: body }
+
+    Code { text: "const greeting = 'Hello, World!';"  variant: body  }
+    Code { text: "function add(a, b) { return a + b; }"  variant: body }
+    Code { text: "SELECT * FROM users WHERE active = TRUE;"  variant: caption }
+
+    Text { text: "Inline code at different sizes"  variant: heading }
+    Code { text: "npm install @wrafjs/parser"  size: 11 }
+    Code { text: "pnpm run dev"                size: 14 }
+    Code { text: "git commit -m 'fix layout'"  size: 16 }
+  }
+}

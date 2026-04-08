@@ -1,0 +1,300 @@
+Screen {
+  width: 1280
+  height: 800
+
+  Row {
+    Navbar {
+      title: "Acme Analytics"
+      width: 100%
+      Search { placeholder: "Search orders, customers, SKUs…"  width: 260 }
+      Badge  { text: "3"     variant: warning }
+      Badge  { text: "!"     variant: danger  }
+      Badge  { text: "LIVE"  variant: success }
+      Avatar { name: "Maria Garcia"  size: sm }
+    }
+  }
+
+  Row {
+    width: 100%
+    height: 94%
+
+    Column {
+      width: 17%
+      height: 100%
+      padding: 16
+      gap: 4
+
+      Row {
+        gap: 10
+        Avatar { name: "Acme Co"  size: sm }
+        Column {
+          gap: 2
+          Text { text: "Acme Co."   variant: body    }
+          Text { text: "Pro plan"   variant: caption }
+        }
+      }
+
+      Separator {}
+
+      Text { text: "WORKSPACE"  variant: caption }
+      ListItem { text: "Overview"   icon: "home"     }
+      ListItem { text: "Analytics"  icon: "star"     }
+      ListItem { text: "Orders"     icon: "search"   }
+      ListItem { text: "Customers"  icon: "user"     }
+      ListItem { text: "Reports"    icon: "edit"     }
+      ListItem { text: "Inventory"  icon: "menu"     }
+
+      Separator {}
+
+      Text { text: "ADMIN"  variant: caption }
+      ListItem { text: "Team"      icon: "user"     }
+      ListItem { text: "Billing"   icon: "check"    }
+      ListItem { text: "Settings"  icon: "settings" }
+
+      Separator {}
+
+      Alert {
+        text: "Storage 87% full — upgrade plan"
+        variant: warning
+        width: 100%
+      }
+
+      Row {
+        gap: 8
+        Avatar { name: "Maria Garcia"  size: sm }
+        Column {
+          gap: 2
+          Text { text: "Maria Garcia"    variant: caption }
+          Text { text: "Admin · Online"  variant: caption }
+        }
+      }
+    }
+
+    Column {
+      width: 83%
+      height: 100%
+      padding: 20
+      gap: 10
+
+      Row {
+        Alert {
+          text: "3 orders pending approval · EU gateway latency 840ms · SLA breach risk on #4802, #4809"
+          variant: warning
+          width: 100%
+          closable: true
+        }
+      }
+      Row {
+        gap: 8
+        Column {
+          gap: 2
+          width: 30%
+          Text { text: "Sales Overview"       variant: heading }
+          Text { text: "November 2024 · UTC"  variant: caption }
+        }
+        Column {
+          Row {
+            Badge  { text: "● LIVE"           variant: success   }
+            Select { placeholder: "Last 30 days"   width: 140 }
+            Select { placeholder: "All regions"    width: 120 }
+            Button { text: "Schedule report"  variant: secondary }
+            Button { text: "+ New report"     variant: primary   }
+          }
+        }
+      }
+
+      Row {
+        gap: 10
+        
+        Card {
+          title: "Total Revenue"
+          width: 20%
+          height: 13%
+          Text     { text: "$48,295"               variant: title   }
+          Text     { text: "↑ 12.4% vs Oct 2024"   variant: caption }
+          Progress { value: 72  width: 100% }
+        }
+        Card {
+          title: "Active Users"
+          width: 20%
+          height: 13%
+          Text     { text: "3,842"                 variant: title   }
+          Text     { text: "↑ 8.1% vs Oct 2024"    variant: caption }
+          Progress { value: 58  width: 100% }
+        }
+        Card {
+          title: "New Orders"
+          width: 20%
+          height: 13%
+          Text     { text: "1,204"                 variant: title   }
+          Text     { text: "↓ 3.0% vs Oct 2024"    variant: caption }
+          Progress { value: 41  width: 100% }
+        }
+        Card {
+          title: "Avg. Session"
+          width: 20%
+          height: 13%
+          Text     { text: "4m 32s"                variant: title   }
+          Text     { text: "↑ 0.5% vs Oct 2024"    variant: caption }
+          Progress { value: 63  width: 100% }
+        }
+        Card {
+          title: "Churn Rate"
+          width: 20%
+          height: 13%
+          Text     { text: "2.1%"                  variant: title   }
+          Text     { text: "↓ 0.4% vs Oct 2024"    variant: caption }
+          Progress { value: 21  width: 100% }
+        }
+      }
+
+      Row {
+        gap: 10
+        height: 36%
+
+        Card {
+          title: "Revenue Over Time"
+          width: 50%
+          height: 100%
+
+          Tabbar {
+            width: 100%
+            Tab { text: "Revenue"   active: true }
+            Tab { text: "Sessions" }
+            Tab { text: "Orders"   }
+            Tab { text: "Refunds"  }
+          }
+
+          Image { width: 100%  height: 65% }
+
+          Row {
+            gap: 8
+            Text  { text: "Period:"   variant: caption }
+            Badge { text: "7D" }
+            Badge { text: "30D"  variant: primary }
+            Badge { text: "90D" }
+            Badge { text: "1Y"  }
+            Separator { orientation: vertical }
+            Text  { text: "Compare:"  variant: caption }
+            Badge { text: "2023" }
+            Badge { text: "2024"  variant: primary }
+          }
+        }
+
+        Card {
+          title: "Revenue by Channel"
+          width: 22%
+          height: 100%
+
+          ListItem {
+            text: "Direct"
+            subtitle: "$18,420 · 38%"
+            icon: "star"
+          }
+          ListItem {
+            text: "Organic Search"
+            subtitle: "$12,890 · 27%"
+            icon: "search"
+          }
+          ListItem {
+            text: "Paid Ads"
+            subtitle: "$9,340 · 19%"
+            icon: "menu"
+          }
+          ListItem {
+            text: "Referral"
+            subtitle: "$5,120 · 11%"
+            icon: "user"
+          }
+          ListItem {
+            text: "Email"
+            subtitle: "$2,525 · 5%"
+            icon: "edit"
+          }
+
+          Separator {}
+
+          Progress { value: 38  width: 100% }
+          Progress { value: 27  width: 100% }
+          Progress { value: 19  width: 100% }
+          Progress { value: 11  width: 100% }
+          Progress { value: 5   width: 100% }
+        }
+
+        Card {
+          title: "Recent Activity"
+          width: 26%
+          height: 100%
+
+          ListItem {
+            text: "Order #4821 placed"
+            subtitle: "2 min ago · Carlos Mendez · $320"
+            icon: "plus"
+          }
+          ListItem {
+            text: "Payment confirmed #4819"
+            subtitle: "18 min ago · $1,240 via Stripe"
+            icon: "check"
+          }
+          ListItem {
+            text: "Refund requested #4815"
+            subtitle: "1 hr ago · Sarah Kim · $89"
+            icon: "delete"
+          }
+          ListItem {
+            text: "New signup: james@acme.io"
+            subtitle: "2 hr ago · Trial plan"
+            icon: "user"
+          }
+          ListItem {
+            text: "Low stock: SKU-992"
+            subtitle: "3 hr ago · 4 units remaining"
+            icon: "alert"
+          }
+
+          Alert {
+            text: "Gateway timeout EU-west-2 · ops notified"
+            variant: danger
+            width: 100%
+          }
+        }
+      }
+
+      Row {
+        Card {
+        title: "Orders"
+        width: 100%
+        height: 27%
+
+        Row {
+          gap: 8
+          Tabbar {
+            Tab { text: "All"         active: true }
+            Tab { text: "Pending" }
+            Tab { text: "Processing" }
+            Tab { text: "Completed"  }
+            Tab { text: "Cancelled"  }
+          }
+          Search { placeholder: "Order ID, customer, SKU…"  width: 220 }
+          Select { placeholder: "Payment: All"   width: 130 }
+          Select { placeholder: "Date: Any"      width: 110 }
+          Button { text: "Bulk action"   variant: secondary }
+          Button { text: "Export CSV"    variant: ghost     }
+        }
+
+        Tablerow { width: 100%  selected: true }
+        Tablerow { width: 100% }
+        Tablerow { width: 100% }
+        Tablerow { width: 100%  disabled: true }
+
+        Row {
+          gap: 8
+          Checkbox    { text: "Select all" }
+          Text        { text: "Showing 1–4 of 120 orders"  variant: caption }
+          Pagination  { page: 1  total: 120  pageSize: 4   width: 40%       }
+        }
+      }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+// =============================================================================
+// TEST: ut-f8-53 — Drawer
+// =============================================================================
+//
+// INTENT
+//   Validate that Drawer renders as a panel sliding in from the left or right
+//   edge of the Screen. Both side values are shown in separate columns so
+//   their edge anchoring is immediately visible.
+//
+// WHAT IS BEING TESTED
+//   - side: left  → Drawer anchored to the left edge
+//   - side: right → Drawer anchored to the right edge
+//   - title renders a header strip at the top of the Drawer
+//   - Content (ListItems, Buttons) flows inside the Drawer
+//   - Drawer height fills the full Screen height (100%)
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Left Drawer: positioned at x=0, touching the left edge
+//   ✓ Right Drawer: positioned at Screen width - drawerWidth, touching right edge
+//   ✓ Both Drawers have title strips visible at the top
+//   ✓ Content items visible inside each Drawer
+//   ✓ Background area (center) is visible between the two Drawers
+// =============================================================================
+
+Screen {
+  width: 1000
+  height: 700
+
+  // Background
+  Column {
+    width: 100%
+    height: 100%
+    padding: 24
+
+    Text { text: "Main content area (behind drawers)"  variant: heading  align: center }
+    Text { text: "Left drawer slides from the left edge; right drawer from the right edge."  variant: body  align: center }
+  }
+
+  // Left drawer
+  Drawer {
+    title: "Navigation"
+    side: left
+    width: 260
+    height: 100%
+    padding: 16
+    gap: 8
+
+    ListItem { text: "Dashboard"  icon: "home"     }
+    ListItem { text: "Analytics"  icon: "star"     }
+    ListItem { text: "Orders"     icon: "search"   }
+    ListItem { text: "Settings"   icon: "settings" }
+    Separator {}
+    Button { text: "Sign out"  variant: ghost  width: 100% }
+  }
+
+  // Right drawer
+  Drawer {
+    title: "Filters"
+    side: right
+    width: 280
+    height: 100%
+    padding: 16
+    gap: 12
+
+    Text    { text: "Status"      variant: caption }
+    Checkbox { text: "Pending"    }
+    Checkbox { text: "Active"     checked: true }
+    Checkbox { text: "Completed"  }
+    Separator {}
+    Text    { text: "Date range"  variant: caption }
+    Select  { placeholder: "Last 30 days"  width: 100% }
+    Row {
+      gap: 8
+      Button { text: "Reset"   variant: secondary }
+      Button { text: "Apply"   variant: primary   }
+    }
+  }
+}

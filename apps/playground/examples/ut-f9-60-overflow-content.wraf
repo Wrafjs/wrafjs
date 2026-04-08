@@ -1,0 +1,54 @@
+// =============================================================================
+// TEST: ut-f9-60 — Overflow Content
+// =============================================================================
+//
+// INTENT
+//   Validate that when children's total height exceeds a fixed-height parent,
+//   the renderer does not crash and the content visually overflows (is not
+//   clipped by the parent boundary). This is expected behavior in a wireframe
+//   tool — content shows even if it overflows.
+//
+// WHAT IS BEING TESTED
+//   - A Card with height: 120 contains 6 ListItems (~6 × 36 = 216px total)
+//   - The 6 items overflow the 120px card — no crash, content is visible
+//   - Similarly, a Row with height: 60 that contains tall children
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors or crashes
+//   ✓ All list items are rendered, even those past the Card boundary
+//   ✓ The Card boundary rectangle is still drawn at 120px
+//   ✓ No JavaScript exception in the console
+// =============================================================================
+
+Screen {
+  width: 700
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "Card fixed at 120px — 6 items overflow (216px content)"  variant: heading }
+    Card {
+      title: "Overflowing list"
+      width: 400
+      height: 120
+
+      ListItem { text: "Item 1 — fits"       }
+      ListItem { text: "Item 2 — fits"       }
+      ListItem { text: "Item 3 — overflows"  }
+      ListItem { text: "Item 4 — overflows"  }
+      ListItem { text: "Item 5 — overflows"  }
+      ListItem { text: "Item 6 — overflows"  }
+    }
+
+    Text { text: "Row fixed at 60px — Button taller on one side"  variant: heading }
+    Row {
+      height: 60
+      gap: 12
+      Button { text: "Normal"  variant: secondary }
+      Button { text: "XL size overflows row"  variant: primary  size: xl }
+      Button { text: "Normal"  variant: secondary }
+    }
+  }
+}

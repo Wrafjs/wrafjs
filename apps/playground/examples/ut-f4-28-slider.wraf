@@ -1,0 +1,49 @@
+// =============================================================================
+// TEST: ut-f4-28 — Slider
+// =============================================================================
+//
+// INTENT
+//   Validate that Slider renders a horizontal track with a draggable thumb
+//   positioned proportionally to the value within the min/max range.
+//
+// WHAT IS BEING TESTED
+//   - Slider with min, max, value, step properties
+//   - Thumb position: 0% at left, 50% at center, 100% at right of track
+//   - Four sliders showing 0%, 25%, 75%, and 100% positions
+//   - disabled: true renders with reduced opacity
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Slider 0% — thumb at far left of track
+//   ✓ Slider 25% — thumb one-quarter from left
+//   ✓ Slider 75% — thumb three-quarters from left
+//   ✓ Slider 100% — thumb at far right of track
+//   ✓ Disabled slider has reduced opacity
+// =============================================================================
+
+Screen {
+  width: 700
+  height: 500
+  padding: 32
+
+  Column {
+    gap: 20
+
+    Text { text: "Slider positions"  variant: heading }
+
+    Text { text: "0% (min)"    variant: caption }
+    Slider { min: 0  max: 100  value: 0    step: 1  width: 100% }
+
+    Text { text: "25%"         variant: caption }
+    Slider { min: 0  max: 100  value: 25   step: 1  width: 100% }
+
+    Text { text: "75%"         variant: caption }
+    Slider { min: 0  max: 100  value: 75   step: 1  width: 100% }
+
+    Text { text: "100% (max)"  variant: caption }
+    Slider { min: 0  max: 100  value: 100  step: 1  width: 100% }
+
+    Text { text: "Disabled"    variant: caption }
+    Slider { min: 0  max: 100  value: 40   step: 1  width: 100%  disabled: true }
+  }
+}

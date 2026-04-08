@@ -1,0 +1,75 @@
+// =============================================================================
+// TEST: ut-f7-49 — List and ListItems
+// =============================================================================
+//
+// INTENT
+//   Validate that ListItem renders at the correct intrinsic height depending on
+//   whether a subtitle is present (36px without, 48px with), and that the icon
+//   prop adds a glyph to the left of the text.
+//
+// WHAT IS BEING TESTED
+//   - ListItem text only: 36px height
+//   - ListItem text + subtitle: 48px height
+//   - ListItem text + icon: glyph left of label
+//   - ListItem text + subtitle + icon: all three combined
+//   - disabled: true reduces opacity
+//   - List as an optional container (semantic grouping)
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Text-only items are shorter than subtitle items
+//   ✓ Subtitle text appears below the main text, smaller
+//   ✓ Icons render as glyphs left of the label
+//   ✓ Combined variant (text + subtitle + icon) shows all three elements
+//   ✓ Disabled item has reduced opacity
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 700
+  padding: 32
+
+  Row {
+    gap: 24
+
+    Card {
+      title: "Text only (36px each)"
+      width: 220
+
+      List {
+        width: 100%
+        ListItem { text: "Home"       }
+        ListItem { text: "Analytics"  }
+        ListItem { text: "Orders"     }
+        ListItem { text: "Customers"  }
+        ListItem { text: "Settings"   disabled: true }
+      }
+    }
+
+    Card {
+      title: "With subtitle (48px each)"
+      width: 280
+
+      List {
+        width: 100%
+        ListItem { text: "John Doe"      subtitle: "john@example.com"    }
+        ListItem { text: "Jane Smith"    subtitle: "jane@example.com"    }
+        ListItem { text: "Bob Johnson"   subtitle: "Pending verification" disabled: true }
+      }
+    }
+
+    Card {
+      title: "With icon + subtitle"
+      width: 280
+
+      List {
+        width: 100%
+        ListItem { text: "New order"    subtitle: "2 min ago · $240"      icon: "plus"   }
+        ListItem { text: "Payment ok"   subtitle: "18 min ago · $1,200"   icon: "check"  }
+        ListItem { text: "Refund"       subtitle: "1 hr ago · $89"        icon: "delete" }
+        ListItem { text: "New user"     subtitle: "2 hr ago"              icon: "user"   }
+        ListItem { text: "Low stock"    subtitle: "3 hr ago · 4 units"    icon: "alert"  }
+      }
+    }
+  }
+}

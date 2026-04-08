@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wrafjs Playground</title>
+  <!-- Wireframe font — change family name here and in SKETCH_THEME.fontFamily -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #1e1e2e;
+      --mantle:   #181825;
+      --surface0: #313244;
+      --surface1: #45475a;
+      --overlay0: #6c7086;
+      --overlay1: #7f849c;
+      --text:     #cdd6f4;
+      --subtext0: #a6adc8;
+      --blue:     #89b4fa;
+      --green:    #a6e3a1;
+      --red:      #f38ba8;
+      --yellow:   #f9e2af;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Consolas', 'Monaco', 'Menlo', monospace;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Toolbar ─────────────────────────────────────────────────────────────── */
+    #toolbar {
+      height: 36px;
+      padding: 0 16px;
+      background: var(--mantle);
+      border-bottom: 1px solid var(--surface0);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .logo {
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--blue);
+      letter-spacing: 0.5px;
+    }
+
+    .spacer { flex: 1; }
+
+    #example-select {
+      background: var(--surface0);
+      color: var(--subtext0);
+      border: 1px solid var(--surface1);
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-family: inherit;
+      font-size: 11px;
+      height: 24px;
+      cursor: pointer;
+      outline: none;
+    }
+    #example-select:hover  { border-color: var(--overlay0); }
+    #example-select:focus  { border-color: var(--blue); color: var(--text); }
+    #example-select option { background: var(--mantle); }
+
+    .toolbar-btn {
+      background: transparent;
+      border: 1px solid var(--surface1);
+      border-radius: 4px;
+      color: var(--overlay1);
+      font-size: 13px;
+      width: 26px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.1s, border-color 0.1s, background 0.1s;
+    }
+    .toolbar-btn:hover { color: var(--text); border-color: var(--overlay0); background: var(--surface0); }
+
+    #status {
+      font-size: 11px;
+      color: var(--overlay0);
+      min-width: 40px;
+      text-align: right;
+    }
+
+    /* ── Main pane (editor + canvas) ─────────────────────────────────────────── */
+    #main {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: row;
+    }
+
+    /* ── Editor pane ─────────────────────────────────────────────────────────── */
+    #editor-pane {
+      width: 420px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--surface0);
+      min-width: 200px;
+    }
+
+    #editor-header {
+      height: 28px;
+      padding: 0 12px;
+      background: var(--mantle);
+      border-bottom: 1px solid var(--surface0);
+      display: flex;
+      align-items: center;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--overlay1);
+      flex-shrink: 0;
+    }
+
+    #editor-container {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    #editor-container .cm-editor {
+      flex: 1;
+      height: 100%;
+      min-height: 0;
+    }
+    #editor-container .cm-scroller { overflow: auto; }
+
+    /* ── Resizer ─────────────────────────────────────────────────────────────── */
+    #pane-resizer {
+      width: 4px;
+      flex-shrink: 0;
+      background: var(--surface0);
+      cursor: ew-resize;
+      transition: background 0.1s;
+    }
+    #pane-resizer:hover,
+    #pane-resizer.dragging { background: var(--blue); }
+
+    /* ── Canvas pane ─────────────────────────────────────────────────────────── */
+    #canvas-pane {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      background: #e8e4de;
+      position: relative;
+    }
+
+    #canvas-host {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      position: relative;
+      cursor: grab;
+    }
+
+    #canvas-svg {
+      display: block;
+    }
+
+    /* ── Errors bar ──────────────────────────────────────────────────────────── */
+    #errors-bar {
+      flex-shrink: 0;
+      background: var(--mantle);
+      border-top: 1px solid var(--surface0);
+      min-height: 28px;
+      max-height: 120px;
+      overflow-y: auto;
+      padding: 4px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .error-line {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--red);
+    }
+    .warning-line {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--yellow);
+    }
+    .no-errors-line {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--overlay0);
+    }
+
+    /* ── Scrollbars ──────────────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--surface1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--overlay1); }
+  </style>
+</head>
+<body>
+
+  <div id="toolbar">
+    <span class="logo">wrafjs</span>
+    <select id="example-select">
+      <option value="">— Examples —</option>
+    </select>
+    <div class="spacer"></div>
+    <button class="toolbar-btn" id="btn-zoom-in"  title="Zoom in">+</button>
+    <button class="toolbar-btn" id="btn-zoom-out" title="Zoom out">−</button>
+    <button class="toolbar-btn" id="btn-zoom-fit" title="Fit to window">⊡</button>
+    <span id="status">—</span>
+  </div>
+
+  <div id="main">
+
+    <div id="editor-pane">
+      <div id="editor-header">screen.wraf</div>
+      <div id="editor-container"></div>
+    </div>
+
+    <div id="pane-resizer"></div>
+
+    <div id="canvas-pane">
+      <div id="canvas-host">
+        <svg id="canvas-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div id="errors-bar">
+        <span class="no-errors-line">No errors</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

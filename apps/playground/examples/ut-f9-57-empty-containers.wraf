@@ -1,0 +1,56 @@
+// =============================================================================
+// TEST: ut-f9-57 — Empty Containers
+// =============================================================================
+//
+// INTENT
+//   Validate that containers with zero children do not crash the layout engine
+//   or renderer, and that they produce a box only when they have an explicit
+//   width and height (otherwise they collapse to zero size).
+//
+// WHAT IS BEING TESTED
+//   - Empty Row with explicit size → box exists, no children
+//   - Empty Column with explicit size → box exists, no children
+//   - Empty Card with explicit size → box exists (draws a blank rectangle)
+//   - Empty Card without explicit size → collapses to zero, no box
+//   - Empty Modal, Drawer (should not crash)
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors or crashes
+//   ✓ Three explicit-size empty containers render as blank rectangles
+//   ✓ The zero-size empty Card produces no visible box
+//   ✓ Surrounding content is not affected
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 20
+
+    Text { text: "Empty containers with explicit size"  variant: heading }
+    Row {
+      gap: 16
+      Row    { width: 200  height: 80 }
+      Column { width: 200  height: 80 }
+      Card   { width: 200  height: 80 }
+    }
+
+    Text { text: "Empty Card without size (collapses — invisible)"  variant: heading }
+    Row {
+      gap: 16
+      Card { width: 200  height: 60  Text { text: "Before (visible)"  align: center } }
+      Card {}
+      Card { width: 200  height: 60  Text { text: "After (visible)"   align: center } }
+    }
+
+    Text { text: "Empty form controls (render as blank outlines)"  variant: heading }
+    Row {
+      gap: 12
+      Input    { width: 150 }
+      Select   { width: 150 }
+      Button   { width: 150 }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+// =============================================================================
+// TEST: ut-f7-50 — Table and TableRows
+// =============================================================================
+//
+// INTENT
+//   Validate that Tablerow renders with its 40px intrinsic height, that
+//   selected and disabled states produce visually distinct appearances, and
+//   that multiple rows inside a Table stack correctly.
+//
+// WHAT IS BEING TESTED
+//   - Tablerow intrinsic height: 40px
+//   - selected: true → highlighted row (different fill)
+//   - disabled: true → reduced opacity
+//   - Table as a semantic container for Tablerows
+//   - Typical table-in-card pattern with a toolbar and pagination footer
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ All rows are exactly 40px tall
+//   ✓ Selected row has a visually distinct fill compared to normal rows
+//   ✓ Disabled row has noticeably lower opacity
+//   ✓ Rows are evenly stacked with no gap between them
+//   ✓ Table fits inside the Card without overflow
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 700
+  padding: 32
+
+  Card {
+    title: "Orders"
+    width: 100%
+
+    // Toolbar
+    Row {
+      gap: 8
+      Search { placeholder: "Search orders…"  width: 240 }
+      Select { placeholder: "Status: All"     width: 140 }
+      Button { text: "Export"  variant: secondary }
+    }
+
+    // Table body
+    Table {
+      width: 100%
+      Tablerow { width: 100% }
+      Tablerow { width: 100%  selected: true }
+      Tablerow { width: 100% }
+      Tablerow { width: 100%  disabled: true }
+      Tablerow { width: 100% }
+    }
+
+    // Footer
+    Row {
+      gap: 8
+      Text       { text: "Showing 1–5 of 48 orders"  variant: caption }
+      Pagination { page: 1  total: 48  pageSize: 5   width: 280 }
+    }
+  }
+}

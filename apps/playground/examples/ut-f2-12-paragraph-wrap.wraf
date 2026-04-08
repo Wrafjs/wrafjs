@@ -1,0 +1,46 @@
+// =============================================================================
+// TEST: ut-f2-12 — Paragraph Wrapping
+// =============================================================================
+//
+// INTENT
+//   Validate that the Paragraph control wraps long text into multiple lines
+//   and that the layout engine calculates the resulting intrinsic height
+//   correctly based on the container width.
+//
+// WHAT IS BEING TESTED
+//   - Paragraph auto-wraps text at the container boundary
+//   - A narrow Card produces more lines (taller Paragraph) than a wide Card
+//   - The parent Card expands to fit the wrapped Paragraph height
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Narrow Card (250px): text wraps into 4+ lines, Card is tall
+//   ✓ Wide Card (550px): same text wraps into fewer lines, Card is shorter
+//   ✓ No text is clipped — the full paragraph is visible in both cases
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 600
+  padding: 32
+
+  Row {
+    gap: 24
+
+    Card {
+      title: "Narrow — 250px"
+      width: 250
+      Paragraph {
+        text: "This is a long paragraph of body text that should wrap onto multiple lines inside a narrow container, demonstrating the Paragraph control's automatic line-breaking behavior."
+      }
+    }
+
+    Card {
+      title: "Wide — 550px"
+      width: 550
+      Paragraph {
+        text: "This is a long paragraph of body text that should wrap onto multiple lines inside a narrow container, demonstrating the Paragraph control's automatic line-breaking behavior."
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+// =============================================================================
+// TEST: ut-f4-30 — Form Container
+// =============================================================================
+//
+// INTENT
+//   Validate that Form acts as a layout container (like Column) and that its
+//   gap and padding props correctly space the child input controls. This
+//   represents a typical sign-up form layout.
+//
+// WHAT IS BEING TESTED
+//   - Form applies gap and padding like a Column container
+//   - Input controls flow vertically inside the Form
+//   - A Submit Button at the bottom spans full width
+//   - Labels above inputs use the Label control (for: prop)
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Form renders as a padded vertical container
+//   ✓ Each Label-Input pair is visually grouped
+//   ✓ Submit Button is full-width at the bottom
+//   ✓ Consistent gap between all field pairs
+// =============================================================================
+
+Screen {
+  width: 600
+  height: 700
+  padding: 40
+
+  Card {
+    title: "Create account"
+    width: 100%
+
+    Form {
+      width: 100%
+      gap: 12
+      padding: 8
+
+      Label { text: "Full name"     for: "name"     }
+      Input { placeholder: "Jane Doe"               width: 100% }
+
+      Label { text: "Email address" for: "email"    }
+      Input { placeholder: "jane@example.com"       width: 100% }
+
+      Label { text: "Password"      for: "password" }
+      Password { placeholder: "At least 8 characters"  width: 100% }
+
+      Label { text: "Confirm password"  for: "confirm" }
+      Password { placeholder: "Repeat your password"   width: 100% }
+
+      Button { text: "Create account"  variant: primary  width: 100% }
+
+      Text {
+        text: "By signing up you agree to our Terms of Service"
+        variant: caption
+        align: center
+      }
+    }
+  }
+}

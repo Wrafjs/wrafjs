@@ -1,0 +1,43 @@
+// =============================================================================
+// TEST: ut-f3-14 — Column Flow (vertical stacking)
+// =============================================================================
+//
+// INTENT
+//   Validate that a Column stacks its children top-to-bottom in source order,
+//   advancing the cursor by each child's height plus the column's gap.
+//
+// WHAT IS BEING TESTED
+//   - Children appear in the same top-to-bottom order as declared in source
+//   - cursorY advances by child height + gap after each child
+//   - Column auto-height equals the sum of children heights + gaps
+//   - Padding is applied inside the Column before the first child
+//
+// EXPECTED LAYOUT (padding: 16, gap: 8, child heights: 40 each)
+//   Child 1: y = 16
+//   Child 2: y = 16 + 40 + 8 = 64
+//   Child 3: y = 64 + 40 + 8 = 112
+//   Child 4: y = 112 + 40 + 8 = 160
+//   Column total height = 16 + (4×40) + (3×8) + 16 = 216
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Four Cards stacked vertically, touching only via the gap
+//   ✓ Cards appear in numeric order (1 → 2 → 3 → 4) top to bottom
+//   ✓ Consistent spacing between all cards
+// =============================================================================
+
+Screen {
+  width: 700
+  height: 500
+  padding: 24
+
+  Column {
+    padding: 16
+    gap: 8
+
+    Card { width: 100%  height: 40  Text { text: "Child 1"  align: center } }
+    Card { width: 100%  height: 40  Text { text: "Child 2"  align: center } }
+    Card { width: 100%  height: 40  Text { text: "Child 3"  align: center } }
+    Card { width: 100%  height: 40  Text { text: "Child 4"  align: center } }
+  }
+}

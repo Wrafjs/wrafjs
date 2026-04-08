@@ -1,0 +1,49 @@
+// =============================================================================
+// TEST: ut-f2-10 — Text Alignment
+// =============================================================================
+//
+// INTENT
+//   Validate that align: left / center / right shifts the text anchor point
+//   correctly. Each row shows the same text string at a different alignment
+//   inside an equal-width Card so the visual difference is immediately apparent.
+//
+// WHAT IS BEING TESTED
+//   - align: left   → anchorX at left edge of box (text-anchor: start)
+//   - align: center → anchorX at center of box (text-anchor: middle)
+//   - align: right  → anchorX at right edge of box (text-anchor: end)
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ "Left-aligned" text starts at the left edge of the Card
+//   ✓ "Centered" text is visually centered horizontally
+//   ✓ "Right-aligned" text ends at the right edge of the Card
+//   ✓ All three texts are at the same vertical position within their Cards
+// =============================================================================
+
+Screen {
+  width: 700
+  height: 420
+  padding: 32
+
+  Column {
+    gap: 16
+
+    Card {
+      width: 100%
+      height: 80
+      Text { text: "Left-aligned (default)"  align: left   variant: body }
+    }
+
+    Card {
+      width: 100%
+      height: 80
+      Text { text: "Center-aligned"           align: center  variant: body }
+    }
+
+    Card {
+      width: 100%
+      height: 80
+      Text { text: "Right-aligned"            align: right   variant: body }
+    }
+  }
+}

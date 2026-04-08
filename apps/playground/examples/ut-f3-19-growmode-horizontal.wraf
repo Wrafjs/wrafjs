@@ -1,0 +1,56 @@
+// =============================================================================
+// TEST: ut-f3-19 — GrowMode Horizontal
+// =============================================================================
+//
+// INTENT
+//   Validate that growMode: horizontal makes a child expand to fill the
+//   remaining horizontal space in a Row after fixed-width siblings are placed.
+//
+// WHAT IS BEING TESTED
+//   - A Row contains a fixed 120px sidebar, a grow-mode main area, and a
+//     fixed 80px action column
+//   - The grow card fills the space between the sidebar and the action column
+//
+// EXPECTED WIDTHS (row content = 900 - 2×24 = 852, gap: 8)
+//   Sidebar:  120px
+//   Grow:     852 - 120 - 80 - 2×8 = 636px
+//   Actions:  80px
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Three visible columns — sidebar, main, actions
+//   ✓ Main (grow) column is much wider than the flanking columns
+//   ✓ All three columns are the same height
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 500
+  padding: 24
+
+  Row {
+    gap: 8
+    height: 300
+
+    Card {
+      title: "Sidebar"
+      width: 120
+      height: 100%
+      Text { text: "Fixed 120px"  variant: caption  align: center }
+    }
+
+    Card {
+      title: "Main — grows horizontally"
+      growMode: horizontal
+      height: 100%
+      Text { text: "This card fills the remaining width between sidebar and actions"  variant: body }
+    }
+
+    Card {
+      title: "Actions"
+      width: 80
+      height: 100%
+      Text { text: "Fixed 80px"  variant: caption  align: center }
+    }
+  }
+}

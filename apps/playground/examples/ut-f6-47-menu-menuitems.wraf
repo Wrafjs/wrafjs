@@ -1,0 +1,66 @@
+// =============================================================================
+// TEST: ut-f6-47 — Menu and MenuItems
+// =============================================================================
+//
+// INTENT
+//   Validate that Menu acts as a vertical container for MenuItem children,
+//   and that each MenuItem renders its text and optional icon with the active
+//   and disabled states visually distinguishable.
+//
+// WHAT IS BEING TESTED
+//   - Menu as a container (similar to Column, but semantically a menu)
+//   - MenuItem with text only
+//   - MenuItem with text + icon
+//   - active: true on one MenuItem — highlighted appearance
+//   - disabled: true on one MenuItem — reduced opacity
+//   - Separator inside a Menu to group items
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ MenuItems stack vertically within the Menu
+//   ✓ Active MenuItem is visually highlighted (filled background)
+//   ✓ Disabled MenuItem has reduced opacity
+//   ✓ Icons appear left of the label text
+//   ✓ Separator line visible between menu sections
+// =============================================================================
+
+Screen {
+  width: 700
+  height: 600
+  padding: 32
+
+  Row {
+    gap: 32
+
+    Card {
+      title: "Text-only menu"
+      width: 200
+
+      Menu {
+        width: 100%
+        MenuItem { text: "New file"   }
+        MenuItem { text: "Open…"  active: true }
+        MenuItem { text: "Save"       }
+        Separator {}
+        MenuItem { text: "Export as…" }
+        MenuItem { text: "Print"  disabled: true }
+      }
+    }
+
+    Card {
+      title: "Menu with icons"
+      width: 240
+
+      Menu {
+        width: 100%
+        MenuItem { text: "Dashboard"  icon: "home"     active: true }
+        MenuItem { text: "Analytics"  icon: "star"               }
+        MenuItem { text: "Customers"  icon: "user"               }
+        MenuItem { text: "Reports"    icon: "edit"               }
+        Separator {}
+        MenuItem { text: "Settings"   icon: "settings"           }
+        MenuItem { text: "Help"       icon: "alert"   disabled: true }
+      }
+    }
+  }
+}

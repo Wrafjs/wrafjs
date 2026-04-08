@@ -1,0 +1,70 @@
+// =============================================================================
+// TEST: ut-f9-56 — Disabled Nodes
+// =============================================================================
+//
+// INTENT
+//   Validate that disabled: true reduces the opacity of a node and all its
+//   descendants, without affecting its layout position or dimensions. Unlike
+//   hidden, disabled nodes still occupy space in the layout.
+//
+// WHAT IS BEING TESTED
+//   - disabled: true on a leaf control (Button, Input) reduces opacity
+//   - disabled: true on a Card reduces the entire Card and all children
+//   - Layout position and size are identical between enabled and disabled
+//   - Sibling nodes are not affected by a disabled neighbor
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Disabled controls are visibly dimmer than their enabled equivalents
+//   ✓ Disabled Card and all its children appear at reduced opacity
+//   ✓ Enabled and disabled versions occupy the same space side by side
+//   ✓ No layout shift caused by the disabled state
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "Leaf controls — enabled vs disabled"  variant: heading }
+    Row {
+      gap: 16
+      Button { text: "Enabled button"   variant: primary  }
+      Button { text: "Disabled button"  variant: primary  disabled: true }
+    }
+    Row {
+      gap: 16
+      Input  { placeholder: "Enabled input"   width: 200 }
+      Input  { placeholder: "Disabled input"  width: 200  disabled: true }
+    }
+
+    Text { text: "Container — enabled vs disabled Card"  variant: heading }
+    Row {
+      gap: 16
+
+      Card {
+        title: "Enabled Card"
+        width: 280
+        Column {
+          gap: 8
+          Text   { text: "Normal opacity content"  variant: body }
+          Button { text: "Action"  variant: primary  width: 100% }
+        }
+      }
+
+      Card {
+        title: "Disabled Card"
+        width: 280
+        disabled: true
+        Column {
+          gap: 8
+          Text   { text: "Reduced opacity content"  variant: body }
+          Button { text: "Action"  variant: primary  width: 100% }
+        }
+      }
+    }
+  }
+}

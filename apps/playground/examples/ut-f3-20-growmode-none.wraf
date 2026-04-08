@@ -1,0 +1,55 @@
+// =============================================================================
+// TEST: ut-f3-20 — GrowMode None
+// =============================================================================
+//
+// INTENT
+//   Validate that growMode: none prevents a container from expanding beyond
+//   its content size, even when placed inside a fixed-height parent that
+//   would otherwise cause it to fill the remaining space.
+//
+// WHAT IS BEING TESTED
+//   - Without growMode: none, a container in a fixed-height Column fills availH
+//   - With growMode: none, the same container shrinks to fit its children
+//   - Two side-by-side columns demonstrate the difference
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Left column Card (no growMode): tall, filling parent height
+//   ✓ Right column Card (growMode: none): short, sized to its single Button
+//   ✓ The size difference is visually obvious
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 500
+  padding: 32
+
+  Row {
+    gap: 24
+    height: 300
+
+    Column {
+      width: 50%
+      height: 100%
+
+      Text { text: "Default — expands to fill parent"  variant: caption }
+      Card {
+        width: 100%
+        height: 100%
+        Text { text: "This card fills its parent Column's height"  variant: body }
+      }
+    }
+
+    Column {
+      width: 50%
+      height: 100%
+
+      Text { text: "growMode: none — shrinks to content"  variant: caption }
+      Card {
+        width: 100%
+        growMode: none
+        Button { text: "Only this button"  variant: primary  width: 100% }
+      }
+    }
+  }
+}

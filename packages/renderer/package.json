@@ -1,0 +1,25 @@
+{
+  "name": "@wrafjs/renderer",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@wrafjs/controls": "workspace:*",
+    "@wrafjs/layout": "workspace:*",
+    "roughjs": "^4.6.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

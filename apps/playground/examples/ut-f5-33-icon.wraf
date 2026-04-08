@@ -1,0 +1,65 @@
+// =============================================================================
+// TEST: ut-f5-33 — Icon Control
+// =============================================================================
+//
+// INTENT
+//   Validate that the Icon control renders a Unicode symbol centered within its
+//   bounding box, and that the size prop scales both the glyph and the box.
+//
+// WHAT IS BEING TESTED
+//   - Icon with common names: home, star, search, user, settings, plus, delete,
+//     check, alert, menu, edit
+//   - size prop: 16 / 24 / 32 / 48 — intrinsic height equals the size
+//   - color prop: overrides the default stroke color
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ All icon glyphs render as symbols (not empty boxes)
+//   ✓ Sizes increase proportionally from 16 to 48
+//   ✓ Colored icons show the specified color
+//   ✓ Each icon is horizontally and vertically centered in its box
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "Common icons at size 24"  variant: heading }
+    Row {
+      gap: 16
+      Icon { name: "home"     size: 24 }
+      Icon { name: "star"     size: 24 }
+      Icon { name: "search"   size: 24 }
+      Icon { name: "user"     size: 24 }
+      Icon { name: "settings" size: 24 }
+      Icon { name: "plus"     size: 24 }
+      Icon { name: "delete"   size: 24 }
+      Icon { name: "check"    size: 24 }
+      Icon { name: "alert"    size: 24 }
+      Icon { name: "menu"     size: 24 }
+      Icon { name: "edit"     size: 24 }
+    }
+
+    Text { text: "Size scale"  variant: heading }
+    Row {
+      gap: 16
+      Icon { name: "star"  size: 16 }
+      Icon { name: "star"  size: 24 }
+      Icon { name: "star"  size: 32 }
+      Icon { name: "star"  size: 48 }
+    }
+
+    Text { text: "Color override"  variant: heading }
+    Row {
+      gap: 16
+      Icon { name: "alert"  size: 24  color: "#e53e3e" }
+      Icon { name: "check"  size: 24  color: "#38a169" }
+      Icon { name: "star"   size: 24  color: "#d69e2e" }
+      Icon { name: "user"   size: 24  color: "#3182ce" }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+// =============================================================================
+// TEST: ut-f5-41 — Separator and Divider
+// =============================================================================
+//
+// INTENT
+//   Validate that Separator and Divider render as thin lines in both horizontal
+//   and vertical orientations. Vertical orientation requires a known parent
+//   height to fill, which is tested with an explicit Row height.
+//
+// WHAT IS BEING TESTED
+//   - Separator / Divider horizontal: 1px horizontal line spanning full width
+//   - Separator / Divider vertical: line stretching to parent Row height
+//   - Both controls should look identical (they differ only semantically)
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Horizontal Separator/Divider renders as a thin 1px horizontal rule
+//   ✓ Vertical Separator/Divider renders as a thin vertical line
+//   ✓ Vertical line fills the full height of its parent Row
+//   ✓ Both Separator and Divider produce visually identical results
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "Section A"  variant: heading }
+    Text { text: "Content above the horizontal separator"  variant: body }
+
+    Separator {}
+
+    Text { text: "Section B"  variant: heading }
+    Text { text: "Content below the separator — Separator used"  variant: body }
+
+    Divider {}
+
+    Text { text: "Section C"  variant: heading }
+    Text { text: "Content below the divider — Divider used"  variant: body }
+
+    Text { text: "Vertical orientation in a Row"  variant: heading }
+    Row {
+      height: 80
+      gap: 16
+
+      Text { text: "Left panel"   variant: body }
+      Separator { orientation: vertical }
+      Text { text: "Middle panel" variant: body }
+      Divider   { orientation: vertical }
+      Text { text: "Right panel"  variant: body }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+// =============================================================================
+// TEST: ut-f6-46 — Breadcrumb
+// =============================================================================
+//
+// INTENT
+//   Validate that Breadcrumb renders as a compact horizontal control with
+//   its text visible, and that multiple Breadcrumbs chained in a Row simulate
+//   a real navigation path with separators between levels.
+//
+// WHAT IS BEING TESTED
+//   - Breadcrumb intrinsic height (same as a text line)
+//   - text prop renders the label for each breadcrumb segment
+//   - Multiple Breadcrumbs + Separators in a Row simulate a crumb trail
+//   - disabled: true (last item) shows the current page non-clickably
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Breadcrumb items appear horizontally left-to-right
+//   ✓ "/" separators appear between each crumb
+//   ✓ Last item (current page) has reduced opacity (disabled)
+//   ✓ All items fit on a single horizontal line
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 400
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "Simple breadcrumb path"  variant: heading }
+    Row {
+      gap: 4
+      Breadcrumb { text: "Home"     }
+      Text       { text: "/"        variant: caption }
+      Breadcrumb { text: "Products" }
+      Text       { text: "/"        variant: caption }
+      Breadcrumb { text: "Electronics" }
+      Text       { text: "/"        variant: caption }
+      Breadcrumb { text: "Laptops"  disabled: true }
+    }
+
+    Text { text: "Dashboard path"  variant: heading }
+    Row {
+      gap: 4
+      Breadcrumb { text: "Dashboard" }
+      Text       { text: "›"  variant: caption }
+      Breadcrumb { text: "Orders" }
+      Text       { text: "›"  variant: caption }
+      Breadcrumb { text: "Order #4821"  disabled: true }
+    }
+
+    Text { text: "Single segment (root page)"  variant: heading }
+    Row {
+      Breadcrumb { text: "Home"  disabled: true }
+    }
+  }
+}

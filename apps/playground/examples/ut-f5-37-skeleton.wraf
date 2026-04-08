@@ -1,0 +1,81 @@
+// =============================================================================
+// TEST: ut-f5-37 — Skeleton
+// =============================================================================
+//
+// INTENT
+//   Validate that Skeleton renders a set of gray placeholder lines whose
+//   total height equals lines × lineHeight, simulating a content-loading state.
+//
+// WHAT IS BEING TESTED
+//   - lines: 1 → single thin rectangle (one text-line height)
+//   - lines: 3 → three stacked placeholder bars
+//   - lines: 6 → six bars — taller than the 3-line version
+//   - Skeleton inside a Card simulates a loading card pattern
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Skeleton intrinsic height = lines × 20px
+//   ✓ Each set of lines renders as distinct gray horizontal bars
+//   ✓ 6-line Skeleton is exactly twice as tall as the 3-line one
+//   ✓ Skeleton inside a Card does not overflow the Card boundaries
+// =============================================================================
+
+Screen {
+  width: 700
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "Skeleton line counts"  variant: heading }
+
+    Row {
+      gap: 16
+
+      Card {
+        title: "1 line"
+        width: 200
+        Skeleton { lines: 1  width: 100% }
+      }
+
+      Card {
+        title: "3 lines"
+        width: 200
+        Skeleton { lines: 3  width: 100% }
+      }
+
+      Card {
+        title: "6 lines"
+        width: 200
+        Skeleton { lines: 6  width: 100% }
+      }
+    }
+
+    Text { text: "Loading card pattern"  variant: heading }
+    Row {
+      gap: 16
+
+      Card {
+        title: "Loading…"
+        width: 280
+        Column {
+          gap: 8
+          Skeleton { lines: 1  width: 60% }
+          Skeleton { lines: 3  width: 100% }
+          Skeleton { lines: 1  width: 40% }
+        }
+      }
+
+      Card {
+        title: "Also loading…"
+        width: 280
+        Column {
+          gap: 8
+          Skeleton { lines: 2  width: 100% }
+          Skeleton { lines: 1  width: 80% }
+        }
+      }
+    }
+  }
+}

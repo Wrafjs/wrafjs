@@ -1,0 +1,53 @@
+// =============================================================================
+// TEST: ut-f5-36 — Spinner
+// =============================================================================
+//
+// INTENT
+//   Validate that Spinner renders a circular loading indicator at all five
+//   size values, and that the intrinsic height matches the declared size.
+//
+// WHAT IS BEING TESTED
+//   - Spinner with size: xs / sm / md / lg / xl
+//   - Intrinsic height equals the diameter for each size
+//   - Spinner inside a Button-height Row to show inline usage
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Five circles with clearly increasing diameters
+//   ✓ Spinners are circular (equal width and height)
+//   ✓ md Spinner is the same height as a standard Button (36px)
+// =============================================================================
+
+Screen {
+  width: 700
+  height: 400
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "All sizes"  variant: heading }
+    Row {
+      gap: 20
+      Spinner { size: xs }
+      Spinner { size: sm }
+      Spinner { size: md }
+      Spinner { size: lg }
+      Spinner { size: xl }
+    }
+
+    Text { text: "Inline with text (loading state pattern)"  variant: heading }
+    Row {
+      gap: 12
+      Spinner { size: sm }
+      Text { text: "Loading your data, please wait…"  variant: body }
+    }
+
+    Text { text: "Inside a button-height Row"  variant: heading }
+    Row {
+      gap: 12
+      Spinner { size: md }
+      Button  { text: "Cancel"  variant: secondary }
+    }
+  }
+}

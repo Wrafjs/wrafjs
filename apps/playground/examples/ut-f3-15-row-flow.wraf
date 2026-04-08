@@ -1,0 +1,61 @@
+// =============================================================================
+// TEST: ut-f3-15 — Row Flow (horizontal stacking + wrap)
+// =============================================================================
+//
+// INTENT
+//   Validate that a Row places children left-to-right and wraps to the next
+//   line when the remaining width is insufficient for the next child.
+//
+// WHAT IS BEING TESTED
+//   A) Four 200px cards that all fit on one line
+//   B) A fill-width card (no explicit width) forces subsequent cards to wrap
+//   C) Four 500px cards: first two fit, second two wrap to line 2
+//
+// EXPECTED WRAP (screen content width = 900 - 2×24 = 852, gap: 8)
+//   A) 4 × 200 + 3 × 8 = 824 < 852 → all on one line
+//   B) No-width card fills line 1; cards 2-4 wrap to line 2
+//   C) 500 + 8 + 500 = 1008 > 852 → cards 3-4 wrap to line 2
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Scenario A: four cards on a single horizontal line
+//   ✓ Scenario B: fill card on line 1, three cards below on line 2
+//   ✓ Scenario C: two cards on line 1, two wrapped to line 2
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 700
+  padding: 24
+
+  Column {
+    gap: 32
+
+    Text { text: "A — all fit on one line (4 × 200px, gap: 8)"  variant: caption }
+    Row {
+      gap: 8
+      Card { width: 200  height: 50  Text { text: "A1"  align: center } }
+      Card { width: 200  height: 50  Text { text: "A2"  align: center } }
+      Card { width: 200  height: 50  Text { text: "A3"  align: center } }
+      Card { width: 200  height: 50  Text { text: "A4"  align: center } }
+    }
+
+    Text { text: "B — fill card fills line 1; remaining cards wrap"  variant: caption }
+    Row {
+      gap: 8
+      Card { height: 50  Text { text: "B1 — fills full width"  align: center } }
+      Card { width: 200  height: 50  Text { text: "B2"  align: center } }
+      Card { width: 200  height: 50  Text { text: "B3"  align: center } }
+      Card { width: 200  height: 50  Text { text: "B4"  align: center } }
+    }
+
+    Text { text: "C — 4 × 500px: first two fit, last two wrap"  variant: caption }
+    Row {
+      gap: 8
+      Card { width: 500  height: 50  Text { text: "C1"  align: center } }
+      Card { width: 500  height: 50  Text { text: "C2"  align: center } }
+      Card { width: 500  height: 50  Text { text: "C3 — wrapped"  align: center } }
+      Card { width: 500  height: 50  Text { text: "C4 — wrapped"  align: center } }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+// =============================================================================
+// TEST: ut-f5-32 — Avatar Sizes
+// =============================================================================
+//
+// INTENT
+//   Validate that all 5 Avatar size values produce proportionally scaled
+//   circular renders, with initials derived from the name property.
+//
+// WHAT IS BEING TESTED
+//   Sizes: xs / sm / md / lg / xl — each maps to a distinct px diameter
+//   Name-to-initials: "John Doe" → "JD" displayed centered in the circle
+//   Src prop: when src is provided, renders as an image placeholder instead
+//   Disabled: reduced opacity
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Five circles with increasing diameter from xs to xl
+//   ✓ Two-letter initials visible and centered in each circle
+//   ✓ Image avatar renders a hatched placeholder rectangle
+//   ✓ Disabled avatar has reduced opacity
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 400
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "All sizes — initials from name"  variant: heading }
+    Row {
+      gap: 16
+      Avatar { name: "Alice Brown"   size: xs }
+      Avatar { name: "Bob Chen"      size: sm }
+      Avatar { name: "Clara Davis"   size: md }
+      Avatar { name: "David Evans"   size: lg }
+      Avatar { name: "Eva Franklin"  size: xl }
+    }
+
+    Text { text: "Image avatar (src provided)"  variant: heading }
+    Row {
+      gap: 16
+      Avatar { src: "https://example.com/avatar.jpg"  size: sm }
+      Avatar { src: "https://example.com/avatar.jpg"  size: md }
+      Avatar { src: "https://example.com/avatar.jpg"  size: lg }
+    }
+
+    Text { text: "Disabled"  variant: heading }
+    Row {
+      gap: 16
+      Avatar { name: "Ghost User"  size: md  disabled: true }
+    }
+  }
+}

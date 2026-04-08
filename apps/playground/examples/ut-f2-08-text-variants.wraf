@@ -1,0 +1,41 @@
+// =============================================================================
+// TEST: ut-f2-08 — Text Variants
+// =============================================================================
+//
+// INTENT
+//   Validate that all semantic Text variant values produce distinct intrinsic
+//   heights and font sizes in the renderer. Each variant maps to a specific
+//   text-size key (display=32, title=24, heading=20, subheading=16, body=14,
+//   caption=12, overline=11, annotation=10).
+//
+// WHAT IS BEING TESTED
+//   - All 8 VARIANT_TEXT values: display, title, heading, subheading,
+//     body, caption, overline, annotation
+//   - Intrinsic heights differ: larger variants take more vertical space
+//   - Renderer uses correct font-size per variant
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors or validator warnings
+//   ✓ 8 text lines visible, each with visually different font sizes
+//   ✓ "display" is the largest — clearly bigger than all others
+//   ✓ "annotation" is the smallest — barely legible
+//   ✓ Vertical spacing between items follows each variant's lineHeight
+// =============================================================================
+
+Screen {
+  width: 700
+  height: 700
+  padding: 32
+
+  Column {
+    gap: 8
+    Text { text: "Display — the largest variant"      variant: display     }
+    Text { text: "Title — page or section title"      variant: title       }
+    Text { text: "Heading — card or group heading"    variant: heading     }
+    Text { text: "Subheading — secondary heading"     variant: subheading  }
+    Text { text: "Body — default reading text"        variant: body        }
+    Text { text: "Caption — supplemental small text"  variant: caption     }
+    Text { text: "Overline — label above a heading"   variant: overline    }
+    Text { text: "Annotation — the smallest variant"  variant: annotation  }
+  }
+}

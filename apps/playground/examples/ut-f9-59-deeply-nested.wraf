@@ -1,0 +1,84 @@
+// =============================================================================
+// TEST: ut-f9-59 — Deeply Nested Layout
+// =============================================================================
+//
+// INTENT
+//   Validate that the parser, layout engine, and renderer handle 6+ levels of
+//   nesting without stack overflow, performance degradation, or incorrect
+//   geometry. Each level must correctly inherit availW from its parent.
+//
+// WHAT IS BEING TESTED
+//   - 7-level nesting: Screen → Card → Row → Column → Card → Row → Button
+//   - Each level's contentW is correctly derived from the parent
+//   - width: 100% at the innermost level resolves to the deepest Card's contentW
+//   - No stack overflow or infinite recursion in the walk() function
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors or crashes
+//   ✓ All 7 nesting levels render visibly
+//   ✓ Inner Button is visible inside the deepest Card
+//   ✓ Each frame is inset from its parent (padding visible)
+//   ✓ Status bar shows a box count > 7 (one per container + button)
+// =============================================================================
+
+Screen {
+  width: 900
+  height: 700
+  padding: 16
+
+  Card {
+    title: "Level 1 — Card"
+    width: 100%
+    padding: 12
+
+    Row {
+      gap: 12
+
+      Column {
+        width: 100%
+        gap: 8
+
+        Text { text: "Level 2 — Row > Column"  variant: caption }
+
+        Card {
+          title: "Level 3 — nested Card"
+          width: 100%
+          padding: 12
+
+          Row {
+            gap: 8
+
+            Column {
+              width: 100%
+              gap: 6
+
+              Text { text: "Level 4 — Row > Column"  variant: caption }
+
+              Card {
+                title: "Level 5 — deeply nested Card"
+                width: 100%
+                padding: 12
+
+                Row {
+                  gap: 8
+
+                  Column {
+                    width: 100%
+
+                    Text { text: "Level 6 — Row > Column"  variant: caption }
+
+                    Button {
+                      text: "Level 7 — Button (innermost)"
+                      variant: primary
+                      width: 100%
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

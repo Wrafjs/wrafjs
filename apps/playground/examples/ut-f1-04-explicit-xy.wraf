@@ -1,0 +1,44 @@
+// =============================================================================
+// TEST: ut-f1-04 — Explicit x / y Positioning
+// =============================================================================
+//
+// INTENT
+//   Validate that children with explicit x and y props are placed at absolute
+//   coordinates, bypassing the flow layout entirely. The four Cards should
+//   appear at the four corners of the Screen with no flow-based offsets.
+//
+// WHAT IS BEING TESTED
+//   - x: N and y: N place the child at an absolute position within the parent
+//   - Absolute children do not participate in the parent's flow cursor
+//   - Multiple absolute children can coexist without affecting each other
+//
+// EXPECTED POSITIONS (Card size: 120 × 80)
+//   Top-left:     x=20,  y=20
+//   Top-right:    x=660, y=20   (800 - 120 - 20)
+//   Bottom-left:  x=20,  y=500  (600 - 80 - 20)
+//   Bottom-right: x=660, y=500
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Four Cards visible, one at each corner
+//   ✓ No Card is displaced by the others
+//   ✓ Center of the canvas is empty
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 600
+
+  Card { x: 20   y: 20   width: 120  height: 80
+    Text { text: "Top-left"     variant: caption }
+  }
+  Card { x: 660  y: 20   width: 120  height: 80
+    Text { text: "Top-right"    variant: caption }
+  }
+  Card { x: 20   y: 500  width: 120  height: 80
+    Text { text: "Bottom-left"  variant: caption }
+  }
+  Card { x: 660  y: 500  width: 120  height: 80
+    Text { text: "Bottom-right" variant: caption }
+  }
+}

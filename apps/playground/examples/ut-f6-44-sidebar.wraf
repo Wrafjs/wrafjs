@@ -1,0 +1,72 @@
+// =============================================================================
+// TEST: ut-f6-44 — Sidebar
+// =============================================================================
+//
+// INTENT
+//   Validate that Sidebar renders with its fixed 220px intrinsic width and
+//   stacks ListItem children vertically to form a navigation menu. Separator
+//   and section labels group the items.
+//
+// WHAT IS BEING TESTED
+//   - Sidebar intrinsic width is 220px (no explicit width needed)
+//   - ListItem children stack vertically inside the Sidebar
+//   - Separator divides sections within the sidebar
+//   - Text used as section headings above groups of ListItems
+//   - A footer Row with Avatar and user info at the bottom
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Sidebar is 220px wide
+//   ✓ ListItems stack top-to-bottom with consistent heights
+//   ✓ Section labels (WORKSPACE, SETTINGS) are visually smaller than items
+//   ✓ Separator lines appear between sections
+//   ✓ Footer Avatar + name visible at the bottom of the Sidebar
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 700
+
+  Row {
+    width: 100%
+    height: 100%
+
+    Sidebar {
+      height: 100%
+      padding: 12
+      gap: 4
+
+      Text { text: "WORKSPACE"  variant: caption }
+      ListItem { text: "Overview"   icon: "home"   }
+      ListItem { text: "Analytics"  icon: "star"   }
+      ListItem { text: "Orders"     icon: "search" }
+      ListItem { text: "Customers"  icon: "user"   }
+
+      Separator {}
+
+      Text { text: "SETTINGS"  variant: caption }
+      ListItem { text: "Profile"    icon: "user"     }
+      ListItem { text: "Billing"    icon: "check"    }
+      ListItem { text: "Settings"   icon: "settings" }
+
+      Separator {}
+
+      Row {
+        gap: 8
+        Avatar { name: "Jane Smith"  size: sm }
+        Column {
+          gap: 2
+          Text { text: "Jane Smith"  variant: caption }
+          Text { text: "Admin"       variant: caption }
+        }
+      }
+    }
+
+    Card {
+      title: "Main content area"
+      width: 100%
+      height: 100%
+      Text { text: "Content to the right of the sidebar"  variant: body }
+    }
+  }
+}

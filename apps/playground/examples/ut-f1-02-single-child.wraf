@@ -1,0 +1,30 @@
+// =============================================================================
+// TEST: ut-f1-02 — Single Child
+// =============================================================================
+//
+// INTENT
+//   Validate that a Screen with one child produces a box for both the Screen
+//   and the child, positioned at the origin with correct dimensions.
+//
+// WHAT IS BEING TESTED
+//   - A Card child is placed at (0, 0) inside the Screen
+//   - The Card's explicit width and height are stored exactly
+//   - The renderer produces two draw calls: Screen bg + Card rect
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Status bar shows "2 boxes"
+//   ✓ One Card rectangle visible at the top-left of the canvas
+//   ✓ Card dimensions match 300 × 200 px
+//   ✓ Cursor on "Card" line highlights the Card box
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 600
+
+  Card {
+    width: 300
+    height: 200
+  }
+}

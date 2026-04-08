@@ -1,0 +1,52 @@
+// =============================================================================
+// TEST: ut-f4-27 — Switch and Toggle
+// =============================================================================
+//
+// INTENT
+//   Validate that Switch and Toggle render as pill-shaped binary controls
+//   with on/off visual states. Both are semantically similar but rendered
+//   with different shapes.
+//
+// WHAT IS BEING TESTED
+//   - Switch: renders as an oval/pill track with a circular thumb
+//   - Toggle: same shape but may differ in visual style
+//   - checked: true shows the thumb in the "on" position (right side)
+//   - checked: false (default) shows the thumb in the "off" position (left)
+//   - disabled: true reduces opacity
+//   - Text label rendered to the right of the control
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ On/off states produce clearly different visual positions
+//   ✓ Switch and Toggle look similar but distinct
+//   ✓ Disabled variants have reduced opacity
+//   ✓ Labels are visible to the right of the glyph
+// =============================================================================
+
+Screen {
+  width: 600
+  height: 500
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "Switch"  variant: heading }
+    Column {
+      gap: 10
+      Switch { text: "Notifications (off)"    checked: false }
+      Switch { text: "Dark mode (on)"         checked: true  }
+      Switch { text: "Disabled (off)"         disabled: true }
+      Switch { text: "Disabled (on)"          checked: true  disabled: true }
+    }
+
+    Text { text: "Toggle"  variant: heading }
+    Column {
+      gap: 10
+      Toggle { text: "Feature flag (off)"    checked: false }
+      Toggle { text: "Beta features (on)"    checked: true  }
+      Toggle { text: "Disabled (off)"        disabled: true }
+      Toggle { text: "Disabled (on)"         checked: true  disabled: true }
+    }
+  }
+}

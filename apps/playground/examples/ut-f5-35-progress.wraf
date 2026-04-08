@@ -1,0 +1,59 @@
+// =============================================================================
+// TEST: ut-f5-35 — Progress Bar
+// =============================================================================
+//
+// INTENT
+//   Validate that the Progress control renders a track with a filled bar
+//   proportional to the value property, and that edge values (0, 100) and
+//   the indeterminate state are handled correctly.
+//
+// WHAT IS BEING TESTED
+//   - value: 0   → no fill visible (empty track)
+//   - value: 25  → quarter-filled
+//   - value: 50  → half-filled
+//   - value: 75  → three-quarter-filled
+//   - value: 100 → fully filled track
+//   - indeterminate: true → animated-look full-width fill
+//   - max: 200 + value: 100 → 50% fill (custom max)
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ Progress bar intrinsic height is 8px
+//   ✓ Fill widths proportional to declared values
+//   ✓ 0% bar shows only the empty track
+//   ✓ 100% bar fills the entire track
+//   ✓ Indeterminate bar has a distinct animated-look appearance
+// =============================================================================
+
+Screen {
+  width: 700
+  height: 600
+  padding: 32
+
+  Column {
+    gap: 16
+
+    Text { text: "Standard values"  variant: heading }
+
+    Text { text: "0% (empty)"        variant: caption }
+    Progress { value: 0    width: 100% }
+
+    Text { text: "25%"               variant: caption }
+    Progress { value: 25   width: 100% }
+
+    Text { text: "50%"               variant: caption }
+    Progress { value: 50   width: 100% }
+
+    Text { text: "75%"               variant: caption }
+    Progress { value: 75   width: 100% }
+
+    Text { text: "100% (full)"       variant: caption }
+    Progress { value: 100  width: 100% }
+
+    Text { text: "Indeterminate"     variant: caption }
+    Progress { indeterminate: true   width: 100% }
+
+    Text { text: "Custom max (value: 100, max: 200 = 50%)"  variant: caption }
+    Progress { value: 100  max: 200  width: 100% }
+  }
+}

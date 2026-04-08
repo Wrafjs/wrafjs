@@ -1,0 +1,63 @@
+// =============================================================================
+// TEST: ut-f8-54 — ScrollView
+// =============================================================================
+//
+// INTENT
+//   Validate that ScrollView renders a fixed-height container with a scroll
+//   indicator on its right edge when its children exceed the declared height,
+//   and that child elements are not clipped.
+//
+// WHAT IS BEING TESTED
+//   - ScrollView with explicit height that is smaller than its total child height
+//   - Children overflow the ScrollView height — scroll indicator is shown
+//   - ScrollView with gap and padding applies them to child layout
+//   - Horizontal vs vertical scroll direction (layout: horizontal vs default)
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors
+//   ✓ ScrollView renders with a visible right-edge scroll indicator
+//   ✓ Child items visible inside the ScrollView (not clipped)
+//   ✓ The fixed height is respected — surrounding content is not pushed down
+//   ✓ Horizontal ScrollView shows a bottom scroll indicator instead
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 700
+  padding: 32
+
+  Column {
+    gap: 24
+
+    Text { text: "Vertical scroll — 8 items in a 200px-tall container"  variant: heading }
+    ScrollView {
+      width: 100%
+      height: 200
+      gap: 4
+
+      ListItem { text: "Item 1 — visible"  subtitle: "Row inside ScrollView" }
+      ListItem { text: "Item 2 — visible"  subtitle: "Row inside ScrollView" }
+      ListItem { text: "Item 3 — visible"  subtitle: "Row inside ScrollView" }
+      ListItem { text: "Item 4 — scrolled" subtitle: "Below visible area"    }
+      ListItem { text: "Item 5 — scrolled" subtitle: "Below visible area"    }
+      ListItem { text: "Item 6 — scrolled" subtitle: "Below visible area"    }
+      ListItem { text: "Item 7 — scrolled" subtitle: "Below visible area"    }
+      ListItem { text: "Item 8 — scrolled" subtitle: "Below visible area"    }
+    }
+
+    Text { text: "Horizontal scroll — 6 cards in a 400px-wide container"  variant: heading }
+    ScrollView {
+      width: 400
+      height: 120
+      layout: horizontal
+      gap: 8
+
+      Card { width: 150  height: 100  Text { text: "Card 1"  align: center } }
+      Card { width: 150  height: 100  Text { text: "Card 2"  align: center } }
+      Card { width: 150  height: 100  Text { text: "Card 3"  align: center } }
+      Card { width: 150  height: 100  Text { text: "Card 4"  align: center } }
+      Card { width: 150  height: 100  Text { text: "Card 5"  align: center } }
+      Card { width: 150  height: 100  Text { text: "Card 6"  align: center } }
+    }
+  }
+}

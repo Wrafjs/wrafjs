@@ -1,0 +1,30 @@
+// =============================================================================
+// TEST: ut-f1-01 — Blank Screen
+// =============================================================================
+//
+// INTENT
+//   Validate that the parser, layout engine, and renderer handle the absolute
+//   minimum valid .wraf file: a Screen node with only width and height, and
+//   no children whatsoever.
+//
+//   This is the "hello world" of the test suite. If this fails, every other
+//   test will also fail — fix this first.
+//
+// WHAT IS BEING TESTED
+//   - Parser: accepts Screen with only numeric properties, no children
+//   - Layout engine: produces a ResolvedScreen with 1 box (the Screen itself)
+//   - Renderer: builds a Scene and renders a blank canvas rectangle
+//   - Playground: does not crash or show error messages
+//
+// ACCEPTANCE CRITERIA
+//   ✓ No errors in the errors bar
+//   ✓ Status bar shows "1 box"
+//   ✓ Canvas renders a blank beige rectangle — no child elements inside
+//   ✓ Zoom-to-fit works (no division-by-zero on minimal scene)
+//   ✓ Cursor anywhere in the file highlights the Screen box
+// =============================================================================
+
+Screen {
+  width: 800
+  height: 600
+}

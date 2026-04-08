@@ -1,0 +1,71 @@
+Screen {
+  width: 375
+  height: 812
+
+  Navbar { title: "Feed"  width: 100% }
+
+  Column {
+    width: 100%
+    gap: 0
+
+    Tabbar {
+      width: 100%
+      Tab { text: "For You"   active: true }
+      Tab { text: "Following" }
+      Tab { text: "Trending"  }
+    }
+
+    Card {
+      width: 100%
+      padding: 16
+      gap: 8
+
+      Row {
+        gap: 8
+        Avatar { name: "Alice Johnson"  size: sm }
+        Column {
+          gap: 2
+          Text { text: "Alice Johnson"   variant: body }
+          Text { text: "2 minutes ago"   variant: caption }
+        }
+      }
+      Text {
+        text: "Just shipped a new feature! Really happy with how it turned out."
+        variant: body
+      }
+      Image { width: 100%  height: 180 }
+      Row {
+        gap: 16
+        Button { text: "Like"    variant: ghost }
+        Button { text: "Comment" variant: ghost }
+        Button { text: "Share"   variant: ghost }
+      }
+    }
+
+    Card {
+      width: 100%
+      padding: 16
+      gap: 8
+
+      Row {
+        gap: 8
+        Avatar { name: "Bob Smith"  size: sm }
+        Column {
+          gap: 2
+          Text { text: "Bob Smith"      variant: body }
+          Text { text: "15 minutes ago" variant: caption }
+        }
+      }
+      Text {
+        text: "Interesting article on distributed systems."
+        variant: body
+      }
+      Row {
+        gap: 16
+        Button { text: "Like"    variant: ghost }
+        Button { text: "Comment" variant: ghost }
+        Button { text: "Share"   variant: ghost }
+      }
+    }
+  }
+}
