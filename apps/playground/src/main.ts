@@ -33,6 +33,8 @@ const exampleSelect   = document.getElementById("example-select")    as HTMLSele
 const btnZoomIn       = document.getElementById("btn-zoom-in")       as HTMLButtonElement;
 const btnZoomOut      = document.getElementById("btn-zoom-out")      as HTMLButtonElement;
 const btnZoomFit      = document.getElementById("btn-zoom-fit")      as HTMLButtonElement;
+const btnDownloadSvg  = document.getElementById("btn-download-svg")  as HTMLButtonElement;
+const btnNewMockup    = document.getElementById("btn-new-mockup")    as HTMLButtonElement;
 const paneResizer     = document.getElementById("pane-resizer")      as HTMLElement;
 const editorPane      = document.getElementById("editor-pane")       as HTMLElement;
 
@@ -268,9 +270,25 @@ btnZoomIn.addEventListener("click", () => {
 btnZoomOut.addEventListener("click", () => {
   zoomAround(canvasHost.clientWidth / 2, canvasHost.clientHeight / 2, 0.8);
 });
+btnNewMockup.addEventListener("click", () => loadNewMockup());
+
 btnZoomFit.addEventListener("click", () => {
   clearZoom();
   if (lastSceneWidth > 0) fitToWindow(lastSceneWidth, lastSceneHeight);
+});
+
+btnDownloadSvg.addEventListener("click", () => {
+  const clone = canvasSvg.cloneNode(true) as SVGSVGElement;
+  clone.removeAttribute("style");
+  clone.querySelector("#wraf-highlight")?.remove();
+  const svg = new XMLSerializer().serializeToString(clone);
+  const blob = new Blob([svg], { type: "image/svg+xml" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = (exampleSelect.value || "wireframe") + ".svg";
+  a.click();
+  URL.revokeObjectURL(url);
 });
 
 // ── Pane resizer ──────────────────────────────────────────────────────────────
@@ -378,15 +396,37 @@ const INITIAL_SOURCE = `Screen {
 }
 `;
 
+const NEW_MOCKUP_SOURCE = `Screen {
+  width: 1440
+  height: 900
+}
+`;
+
+function loadNewMockup(): void {
+  editorView.dispatch({
+    changes: { from: 0, to: editorView.state.doc.length, insert: NEW_MOCKUP_SOURCE },
+  });
+  clearZoom();
+  exampleSelect.value = "";
+  saveState({ example: undefined, source: NEW_MOCKUP_SOURCE });
+  const url = new URL(window.location.href);
+  url.searchParams.delete("example");
+  url.searchParams.set("new", "1");
+  window.history.replaceState(null, "", url);
+}
+
 // ── URL param takes priority over localStorage ────────────────────────────────
 
-const urlExample = new URLSearchParams(window.location.search).get("example");
+const urlParams  = new URLSearchParams(window.location.search);
+const urlExample = urlParams.get("example");
+const urlNew     = urlParams.has("new");
 
 const savedState    = loadState();
 const startExample  = urlExample ?? savedState.example;
-const initialSource = (startExample ? (examples.get(startExample)?.source ?? null) : null)
-  ?? savedState.source
-  ?? INITIAL_SOURCE;
+const fromExample   = startExample ? examples.get(startExample)?.source : undefined;
+const initialSource = urlNew
+  ? NEW_MOCKUP_SOURCE
+  : (fromExample ?? savedState.source ?? INITIAL_SOURCE);
 
 // Restore zoom
 const savedZoom = loadZoom();

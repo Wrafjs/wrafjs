@@ -722,7 +722,7 @@ function boxToDrawCalls(box: ResolvedBox, theme: Theme, sd: SceneDefaults): Draw
     return calls;
   }
 
-  // ── Select / Dropdown ───────────────────────────────────────────────────────
+  // ── Select / Dropdown ──��────────────────────────────────────────────────────
   if (type === "select" || type === "dropdown") {
     const disabled    = prop(box, "disabled") === true;
     const required    = prop(box, "required") === true;
@@ -758,7 +758,7 @@ function boxToDrawCalls(box: ResolvedBox, theme: Theme, sd: SceneDefaults): Draw
     return calls;
   }
 
-  // ── Alert / Toast ────────────────────────────────────────────────────────────
+  // ── Alert / Toast ────────────────────────────────────────────────��───────────
   if (type === "alert" || type === "toast") {
     const variant  = propStr(box, "variant") ?? "default";
     const closable = prop(box, "closable") === true;
@@ -834,9 +834,9 @@ function boxToDrawCalls(box: ResolvedBox, theme: Theme, sd: SceneDefaults): Draw
       const r  = Math.min(box.width, box.height) / 2;
       const cx = box.x + box.width  / 2;
       const cy = box.y + box.height / 2;
-      calls.push(new CircleItem(cx, cy, r, fill, "none"));
+      calls.push(new CircleItem(cx, cy, r, fill, theme.defaultStroke));
     } else {
-      calls.push(new RectItem(box.x, box.y, box.width, box.height, fill, "none", box.height / 2, 1));
+      calls.push(new RectItem(box.x, box.y, box.width, box.height, fill, theme.defaultStroke, box.height / 2, 1));
       const label = displayText(box);
       if (label) {
         calls.push(buildTextItem(
@@ -931,6 +931,52 @@ function boxToDrawCalls(box: ResolvedBox, theme: Theme, sd: SceneDefaults): Draw
     return calls;
   }
 
+  // ── Breadcrumb ───────────────────────────────────────────────────────────────
+  if (type === "breadcrumb") {
+    const label   = propStr(box, "text") ?? "";
+    const opacity = prop(box, "disabled") === true ? 0.45 : 1;
+    if (label) {
+      const t = buildTextItem(
+        box, label, theme,
+        box.x + 4, box.y + box.height / 2,
+        "left", theme.labelSize, false, box.width - 8, false, sd.breadcrumb.textColor,
+      );
+      calls.push(Object.assign(t, { opacity }));
+    }
+    return calls;
+  }
+
+  // ── Tooltip ──────────────────────────────────────────────────────────────────
+  if (type === "tooltip") {
+    calls.push(new RectItem(box.x, box.y, box.width, box.height, sd.tooltip.fill, sd.tooltip.stroke, 4, 1));
+    const label = propStr(box, "text") ?? "";
+    if (label) {
+      calls.push(buildTextItem(
+        box, label, theme,
+        box.x + box.width / 2, box.y + box.height / 2,
+        "center", theme.labelSize, false, box.width - 12, false, sd.tooltip.textColor,
+      ));
+    }
+    return calls;
+  }
+
+  // ── Slider track + thumb (standalone — no background rect) ──────────────────
+  if (type === "slider") {
+    const pct    = propNum(box, "value", 50) / 100;
+    const thumbX = box.x + box.width * pct;
+    const midY   = box.y + box.height / 2;
+    const sl     = sd.slider;
+    // Track background (full width)
+    calls.push(new LineItem(box.x + 4, midY, box.x + box.width - 4, midY, sl.trackStroke, sl.trackWidth, ""));
+    // Track fill (filled portion)
+    if (pct > 0) {
+      calls.push(new LineItem(box.x + 4, midY, thumbX, midY, sl.trackFill, sl.trackWidth, ""));
+    }
+    // Thumb
+    calls.push(new CircleItem(thumbX, midY, sl.thumbRadius, sl.thumbFill, sl.thumbStroke));
+    return calls;
+  }
+
   // ── Default: rect + content ──────────────────────────────────────────────────
   calls.push(buildRect(box, hints, theme));
   calls.push(...contentCalls(box, hints, theme, sd));
@@ -938,16 +984,6 @@ function boxToDrawCalls(box: ResolvedBox, theme: Theme, sd: SceneDefaults): Draw
   // Input caret
   if (["input", "textfield", "textarea", "password", "search"].includes(type)) {
     calls.push(buildInputCaret(box, theme, sd));
-  }
-
-  // Slider track + thumb
-  if (type === "slider") {
-    const pct    = propNum(box, "value", 50) / 100;
-    const thumbX = box.x + box.width * pct;
-    const midY   = box.y + box.height / 2;
-    const sl = sd.slider;
-    calls.push(new LineItem(box.x + 4, midY, box.x + box.width - 4, midY, theme.defaultStroke, 2, ""));
-    calls.push(new CircleItem(thumbX, midY, sl.thumbRadius, hints?.fill ?? sl.thumbFill, hints?.stroke ?? sl.thumbStroke));
   }
 
   // Spinner ring
@@ -968,9 +1004,38 @@ function boxToDrawCalls(box: ResolvedBox, theme: Theme, sd: SceneDefaults): Draw
  * Converts a `ResolvedScreen` into a flat `Scene` of `DrawCall`s.
  * Boxes are sorted back-to-front (lowest depth first).
  */
+const OVERLAY_TYPES = new Set(["modal", "drawer"]);
+
+type WrafNode = ResolvedBox["node"];
+
+function collectDescendantNodes(node: WrafNode, out: Set<WrafNode>): void {
+  for (const child of node.children) {
+    out.add(child);
+    collectDescendantNodes(child, out);
+  }
+}
+
 export function buildScene(screen: ResolvedScreen, theme: Theme): Scene {
   const sd = applySceneDefaults();
-  const sorted = [...screen.boxes].sort((a, b) => a.depth - b.depth);
+
+  // Collect all nodes that are descendants of an overlay (modal/drawer)
+  const overlayDescendants = new Set<WrafNode>();
+  for (const box of screen.boxes) {
+    if (OVERLAY_TYPES.has(box.node.type.toLowerCase())) {
+      collectDescendantNodes(box.node, overlayDescendants);
+    }
+  }
+
+  // Back-to-front by depth; overlay roots + their descendants always on top
+  const isOverlayGroup = (box: ResolvedBox) =>
+    OVERLAY_TYPES.has(box.node.type.toLowerCase()) || overlayDescendants.has(box.node);
+
+  const sorted = [...screen.boxes].sort((a, b) => {
+    const aOverlay = isOverlayGroup(a);
+    const bOverlay = isOverlayGroup(b);
+    if (aOverlay !== bOverlay) return aOverlay ? 1 : -1;
+    return a.depth - b.depth;
+  });
   const calls: DrawCall[] = sorted.flatMap(box => boxToDrawCalls(box, theme, sd));
 
   return {

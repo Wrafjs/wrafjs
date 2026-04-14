@@ -73,11 +73,11 @@ export class SketchPainter implements Painter {
       fill:        fill === "none" || fill === "transparent" ? "transparent" : fill,
       stroke:      stroke === "none" || stroke === "transparent" ? "transparent" : stroke,
       strokeWidth: 1.2,
-      roughness:   1.4,
+      roughness:   1.3,
       bowing:      0.8,
-      fillStyle:   "hachure" as const,
+      fillStyle:   "solid" as const,
       fillWeight:  0.6,
-      hachureGap:  8,
+      hachureGap:  4,
     };
   }
 
@@ -102,6 +102,7 @@ export class SketchPainter implements Painter {
       stroke:      call.stroke,
       strokeWidth: 1.2,
       roughness:   1.4,
+      fillStyle:   "solid",
     }) as SVGElement);
   }
 

@@ -1,6 +1,6 @@
 Screen {
   width: 1280
-  height: 800
+  height: 1800
 
   Row {
     Navbar {
@@ -105,11 +105,10 @@ Screen {
 
       Row {
         gap: 10
-        
+
         Card {
           title: "Total Revenue"
           width: 20%
-          height: 13%
           Text     { text: "$48,295"               variant: title   }
           Text     { text: "↑ 12.4% vs Oct 2024"   variant: caption }
           Progress { value: 72  width: 100% }
@@ -117,7 +116,6 @@ Screen {
         Card {
           title: "Active Users"
           width: 20%
-          height: 13%
           Text     { text: "3,842"                 variant: title   }
           Text     { text: "↑ 8.1% vs Oct 2024"    variant: caption }
           Progress { value: 58  width: 100% }
@@ -125,7 +123,6 @@ Screen {
         Card {
           title: "New Orders"
           width: 20%
-          height: 13%
           Text     { text: "1,204"                 variant: title   }
           Text     { text: "↓ 3.0% vs Oct 2024"    variant: caption }
           Progress { value: 41  width: 100% }
@@ -133,7 +130,6 @@ Screen {
         Card {
           title: "Avg. Session"
           width: 20%
-          height: 13%
           Text     { text: "4m 32s"                variant: title   }
           Text     { text: "↑ 0.5% vs Oct 2024"    variant: caption }
           Progress { value: 63  width: 100% }
@@ -141,7 +137,6 @@ Screen {
         Card {
           title: "Churn Rate"
           width: 20%
-          height: 13%
           Text     { text: "2.1%"                  variant: title   }
           Text     { text: "↓ 0.4% vs Oct 2024"    variant: caption }
           Progress { value: 21  width: 100% }
@@ -150,13 +145,11 @@ Screen {
 
       Row {
         gap: 10
-        height: 36%
 
         Card {
           title: "Revenue Over Time"
           width: 50%
-          height: 100%
-
+          height: 585
           Tabbar {
             width: 100%
             Tab { text: "Revenue"   active: true }
@@ -165,26 +158,36 @@ Screen {
             Tab { text: "Refunds"  }
           }
 
-          Image { width: 100%  height: 65% }
+          Image { width: 100%  height: 400 }
 
           Row {
             gap: 8
-            Text  { text: "Period:"   variant: caption }
-            Badge { text: "7D" }
-            Badge { text: "30D"  variant: primary }
-            Badge { text: "90D" }
-            Badge { text: "1Y"  }
+            Column {
+              width: 49%
+              Text  { text: "Period:"   variant: caption }
+              Row {
+                Badge { text: "7D" }
+                Badge { text: "30D"  variant: primary }
+                Badge { text: "90D" }
+                Badge { text: "1Y"  }
+              }
+            }
             Separator { orientation: vertical }
-            Text  { text: "Compare:"  variant: caption }
-            Badge { text: "2023" }
-            Badge { text: "2024"  variant: primary }
+            Column {
+              width: 49%
+              Text  { text: "Compare:"  variant: caption }
+              Row {
+                Badge { text: "2023" }
+                Badge { text: "2024"  variant: primary }
+              }
+            }
           }
         }
 
         Card {
           title: "Revenue by Channel"
           width: 22%
-          height: 100%
+          height: 585
 
           ListItem {
             text: "Direct"
@@ -224,7 +227,7 @@ Screen {
         Card {
           title: "Recent Activity"
           width: 26%
-          height: 100%
+          height: 585
 
           ListItem {
             text: "Order #4821 placed"
@@ -261,39 +264,37 @@ Screen {
       }
 
       Row {
+        height: 460
         Card {
-        title: "Orders"
-        width: 100%
-        height: 27%
-
-        Row {
-          gap: 8
-          Tabbar {
-            Tab { text: "All"         active: true }
-            Tab { text: "Pending" }
-            Tab { text: "Processing" }
-            Tab { text: "Completed"  }
-            Tab { text: "Cancelled"  }
+          title: "Orders"
+          Row {
+            gap: 8
+            Tabbar {
+              Tab { text: "All"         active: true }
+              Tab { text: "Pending" }
+              Tab { text: "Processing" }
+              Tab { text: "Completed"  }
+              Tab { text: "Cancelled"  }
+            }
+            Search { placeholder: "Order ID, customer, SKU…"  width: 220 }
+            Select { placeholder: "Payment: All"   width: 130 }
+            Select { placeholder: "Date: Any"      width: 110 }
+            Button { text: "Bulk action"   variant: secondary }
+            Button { text: "Export CSV"    variant: ghost     }
           }
-          Search { placeholder: "Order ID, customer, SKU…"  width: 220 }
-          Select { placeholder: "Payment: All"   width: 130 }
-          Select { placeholder: "Date: Any"      width: 110 }
-          Button { text: "Bulk action"   variant: secondary }
-          Button { text: "Export CSV"    variant: ghost     }
+  
+          Tablerow { selected: true }
+          Tablerow { }
+          Tablerow { }
+          Tablerow { disabled: true }
+  
+          Row {
+            gap: 8
+            Checkbox    { text: "Select all"  width: 10%}
+            Text        { text: "Showing 1–4 of 120 orders"  variant: caption  width: 20%}
+            Pagination  { page: 1  total: 120  pageSize: 4   width: 30%       }
+          }
         }
-
-        Tablerow { width: 100%  selected: true }
-        Tablerow { width: 100% }
-        Tablerow { width: 100% }
-        Tablerow { width: 100%  disabled: true }
-
-        Row {
-          gap: 8
-          Checkbox    { text: "Select all" }
-          Text        { text: "Showing 1–4 of 120 orders"  variant: caption }
-          Pagination  { page: 1  total: 120  pageSize: 4   width: 40%       }
-        }
-      }
       }
     }
   }

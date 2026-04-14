@@ -23,7 +23,7 @@
 
 Screen {
   width: 800
-  height: 700
+  height: 1200
   padding: 32
 
   Column {
@@ -32,7 +32,7 @@ Screen {
     Text { text: "Vertical scroll — 8 items in a 200px-tall container"  variant: heading }
     ScrollView {
       width: 100%
-      height: 200
+      
       gap: 4
 
       ListItem { text: "Item 1 — visible"  subtitle: "Row inside ScrollView" }
@@ -48,7 +48,7 @@ Screen {
     Text { text: "Horizontal scroll — 6 cards in a 400px-wide container"  variant: heading }
     ScrollView {
       width: 400
-      height: 120
+      
       layout: horizontal
       gap: 8
 

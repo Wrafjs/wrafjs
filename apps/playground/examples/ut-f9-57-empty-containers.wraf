@@ -41,7 +41,7 @@ Screen {
     Row {
       gap: 16
       Card { width: 200  height: 60  Text { text: "Before (visible)"  align: center } }
-      Card {}
+      Card { width: 200 }
       Card { width: 200  height: 60  Text { text: "After (visible)"   align: center } }
     }
 

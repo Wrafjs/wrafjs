@@ -98,6 +98,13 @@ function shrinkWidth(node: WrafNode, opts: LayoutOptions): number {
       : 40;
     return textW + 32;
   }
+  if (node.type.toLowerCase() === "breadcrumb") {
+    const text = propValue(node, "text");
+    const textW = typeof text === "string" && text.length > 0
+      ? Math.ceil(measureText(text, 5).lineWidth)
+      : 40;
+    return textW + 8;
+  }
   const intrinsic = opts.intrinsicWidth.get(node.type.toLowerCase());
   if (intrinsic !== undefined) return intrinsic;
   if (TEXT_NODE_TYPES.has(node.type.toLowerCase())) return estimateTextWidth(node);
@@ -153,14 +160,22 @@ function nodeWidth(node: WrafNode, availW: number, opts: LayoutOptions): number 
       : 40;
     return textW + 32;
   }
+  if (node.type.toLowerCase() === "breadcrumb") {
+    const text = propValue(node, "text");
+    const textW = typeof text === "string" && text.length > 0
+      ? Math.ceil(measureText(text, 5).lineWidth)
+      : 40;
+    return textW + 8;
+  }
   const intrinsic = opts.intrinsicWidth.get(node.type.toLowerCase());
   if (intrinsic !== undefined) return intrinsic;
   if (getGrowMode(node) === "horizontal") {
     const computed = shrinkWidth(node, opts);
     if (computed > 0) return computed;
   }
-  if (availW === 0 && TEXT_NODE_TYPES.has(node.type.toLowerCase())) {
-    return estimateTextWidth(node);
+  if (TEXT_NODE_TYPES.has(node.type.toLowerCase())) {
+    const estimated = estimateTextWidth(node);
+    return availW > 0 ? Math.min(estimated, availW) : estimated;
   }
   return availW > 0 ? availW : 0;
 }
@@ -282,7 +297,7 @@ function autoHeight(
         let chW = isPropPercent(ch, "width")
           ? nodeWidth(ch, autoPercentBase, opts)
           : nodeWidth(ch, availOnLine, opts);
-        if (lineW > 0 && (chW === 0 || lineW + chW > contentW)) {
+        if (lineW > 0 && (chW === 0 || lineW + chW > contentW + 0.5)) {
           totalH += lineH; numLines++; lineW = 0; lineH = 0;
           chW = nodeWidth(ch, contentW, opts);
         }
@@ -406,7 +421,7 @@ function walk(
         ? nodeWidth(child, percentBase, opts)
         : nodeWidth(child, availOnLine, opts);
 
-      if (usedW > 0 && (childW === 0 || usedW + childW > contentW)) {
+      if (usedW > 0 && (childW === 0 || usedW + childW > contentW + 0.5)) {
         cursorY += lineH + gap;
         cursorX = absX + padding;
         usedW = 0;

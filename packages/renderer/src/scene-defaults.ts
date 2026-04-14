@@ -187,10 +187,23 @@ export interface SceneDefaults {
     thumbRadius: number;
     thumbFill:   string;
     thumbStroke: string;
+    trackFill:   string;
+    trackStroke: string;
+    trackWidth:  number;
   };
 
   spinner: {
     stroke: string;
+  };
+
+  breadcrumb: {
+    textColor: string;
+  };
+
+  tooltip: {
+    fill:      string;
+    stroke:    string;
+    textColor: string;
   };
 
   hasText: {
@@ -206,7 +219,7 @@ export const DEFAULT_SCENE_DEFAULTS: SceneDefaults = {
     radius:          4,
     disabledOpacity: 0.4,
     fontXs: 10, fontSm: 11, fontMd: 12, fontLg: 13, fontXl: 14,
-    primaryFill:     "#2a2a2a", primaryStroke:   "#1a1a1a", primaryText:   "#faf8f4",
+    primaryFill:     "#2a2a2a", primaryStroke:   "#1a1a1a", primaryText:   "#ffffff",
     secondaryFill:   "transparent", secondaryStroke: "#2a2a2a", secondaryText: "#2a2a2a",
     dangerFill:      "#c03030", dangerStroke:    "#a02020", dangerText:    "#ffffff",
     ghostFill:       "transparent", ghostStroke:     "#8a8a8a", ghostText:     "#3a3a3a",
@@ -331,7 +344,7 @@ export const DEFAULT_SCENE_DEFAULTS: SceneDefaults = {
   },
 
   badge: {
-    textColor:   "#faf8f4",
+    textColor:   "#000000",
     defaultFill: "#8a8a8a",
     primaryFill: "#2a4a9a",
     successFill: "#2a7a3a",
@@ -387,10 +400,23 @@ export const DEFAULT_SCENE_DEFAULTS: SceneDefaults = {
     thumbRadius: 6,
     thumbFill:   "#2a2a2a",
     thumbStroke: "#1a1a1a",
+    trackFill:   "#2a2a2a",
+    trackStroke: "#c8c0b0",
+    trackWidth:  3,
   },
 
   spinner: {
     stroke: "#2a2a2a",
+  },
+
+  breadcrumb: {
+    textColor: "#2a4a9a",
+  },
+
+  tooltip: {
+    fill:      "#2a2a2a",
+    stroke:    "none",
+    textColor: "#faf8f4",
   },
 
   hasText: {

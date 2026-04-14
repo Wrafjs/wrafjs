@@ -169,7 +169,7 @@ export const CONTROLS: ControlDef[] = [
     type: "badge", label: "Badge", category: "display",
     intrinsicHeight: 20, intrinsicWidth: 44, isInteractive: false,
     description: "Píldora de estado o contador.",
-    renderHints: { fill: "#2a2a2a", stroke: "none", radius: 10, hasText: true },
+    renderHints: { fill: "#2a2a2a", stroke: "#2a2a2a", radius: 10, hasText: true },
     defaults: { text: "1" },
   },
   {

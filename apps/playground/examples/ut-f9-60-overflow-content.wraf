@@ -32,7 +32,7 @@ Screen {
     Card {
       title: "Overflowing list"
       width: 400
-      height: 120
+      height: 340
 
       ListItem { text: "Item 1 — fits"       }
       ListItem { text: "Item 2 — fits"       }
